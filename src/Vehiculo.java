@@ -1,5 +1,4 @@
 public abstract class Vehiculo {
-    private String tipoVehiculo;
     private String idVehiculo;
     private String marca;
     private String modelo;

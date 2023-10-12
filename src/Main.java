@@ -9,7 +9,6 @@ public class Main {
         System.out.printf("Bienvenido al Sistema de Gestion de Stock \n");
         int f;
         String a;
-        boolean esNueva;
 
         do {
             System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar\n): ");
@@ -35,9 +34,7 @@ public class Main {
                         System.out.println("Ingreso una opción invalida. \n Ingrese 'n' si la unidad es nueva, o 'u' si es usada: \n");
                         a = sc.next().toLowerCase();
                     }
-                    if (a=="n"){
-                        AltaVehiculo.altaVehiculo(a);
-                    }
+
                     break;
                 case 2:
                     //Clase de Busqueda de unidad por ID

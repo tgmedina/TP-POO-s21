@@ -1,11 +1,11 @@
-public class VehiculoUsado extends Vehiculo{
+public class Cuatriciclo extends Vehiculo{
     private int estadoBateria;
     private boolean estadoPintura;
     private String otroFaltante;
     private boolean espejoDerecho;
     private boolean espejoIzquierdo;
 
-    public VehiculoUsado(String idVehiculo, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoMoto, String tipoTraccion, int estadoBateria, boolean estadoPintura, String otroFaltante, boolean espejoDerecho, boolean espejoIzquierdo) {
+    public Cuatriciclo(String idVehiculo, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoMoto, String tipoTraccion, int estadoBateria, boolean estadoPintura, String otroFaltante, boolean espejoDerecho, boolean espejoIzquierdo) {
         super(idVehiculo, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoMoto, tipoTraccion);
         this.estadoBateria = estadoBateria;
         this.estadoPintura = estadoPintura;
