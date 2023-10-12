@@ -1,5 +1,6 @@
 public abstract class Vehiculo {
-    private String idVehiculo;
+    private String sku;
+    private int idVehiculo;
     private String marca;
     private String modelo;
     private String paisFabricacion;
@@ -12,11 +13,9 @@ public abstract class Vehiculo {
     private String frenoDelantero;
     private String frenoTrasero;
     private String tipoRueda;
-    private String tipoMoto;
-    private String tipoTraccion="N/C";
 
-    public Vehiculo(String idVehiculo, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoMoto, String tipoTraccion) {
-        this.idVehiculo = idVehiculo;
+    public Vehiculo(int idVehiculo, String sku, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoMoto, String tipoTraccion) {
+        this.sku = sku;
         this.marca = marca;
         this.modelo = modelo;
         this.paisFabricacion = paisFabricacion;
@@ -29,15 +28,15 @@ public abstract class Vehiculo {
         this.frenoDelantero = frenoDelantero;
         this.frenoTrasero = frenoTrasero;
         this.tipoRueda = tipoRueda;
-        this.tipoMoto = tipoMoto;
+
     }
 
-    public String getIdVehiculo() {
-        return idVehiculo;
+    public String getSku() {
+        return sku;
     }
 
-    public void setIdVehiculo(String idVehiculo) {
-        this.idVehiculo = idVehiculo;
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getMarca() {
@@ -135,21 +134,14 @@ public abstract class Vehiculo {
     public void setTipoRueda(String tipoRueda) {
         this.tipoRueda = tipoRueda;
     }
-
-    public String getTipoMoto() {
-        return tipoMoto;
+    public int getIdVehiculo() {
+        return idVehiculo;
     }
 
-    public void setTipoMoto(String tipoMoto) {
-        this.tipoMoto = tipoMoto;
+    public void setIdVehiculo(int idVehiculo) {
+        this.idVehiculo = idVehiculo;
     }
 
-    public String getTipoTraccion() {
-        return tipoTraccion;
-    }
 
-    public void setTipoTraccion(String tipoTraccion) {
-        this.tipoTraccion = tipoTraccion;
-    }
 }
 
