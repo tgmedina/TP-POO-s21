@@ -1,6 +1,6 @@
 public abstract class Vehiculo {
-    private String sku;
-    private int idVehiculo;
+    private String cui; //Codigo Unico de Inventario
+    private long idVehiculo;
     private String marca;
     private String modelo;
     private String paisFabricacion;
@@ -14,8 +14,8 @@ public abstract class Vehiculo {
     private String frenoTrasero;
     private String tipoRueda;
 
-    public Vehiculo(int idVehiculo, String sku, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoMoto, String tipoTraccion) {
-        this.sku = sku;
+    public Vehiculo(long idVehiculo, String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoMoto, String tipoTraccion) {
+        this.cui = cui;
         this.marca = marca;
         this.modelo = modelo;
         this.paisFabricacion = paisFabricacion;
@@ -31,12 +31,12 @@ public abstract class Vehiculo {
 
     }
 
-    public String getSku() {
-        return sku;
+    public String getCui() {
+        return cui;
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
+    public void setCui(String cui) {
+        this.cui = cui;
     }
 
     public String getMarca() {
@@ -134,11 +134,11 @@ public abstract class Vehiculo {
     public void setTipoRueda(String tipoRueda) {
         this.tipoRueda = tipoRueda;
     }
-    public int getIdVehiculo() {
+    public long getIdVehiculo() {
         return idVehiculo;
     }
 
-    public void setIdVehiculo(int idVehiculo) {
+    public void setIdVehiculo(long idVehiculo) {
         this.idVehiculo = idVehiculo;
     }
 

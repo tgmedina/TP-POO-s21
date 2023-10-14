@@ -27,7 +27,7 @@ public class Main {
             sc.nextLine();
             switch (f) {
                 case 1:
-                    //Clase de alta de unidades
+                    //metodo de alta de unidades
                     System.out.println("Indique si la unidad es 0KM(n) o usada(u): \n");
                     a = sc.next().toLowerCase();
                     while(a != "n" && a !="u"); {
@@ -63,6 +63,13 @@ public class Main {
 
 
         } while (f != 0);
+
+    }
+
+    public void AltaVehiculo(){
+        String cui;
+        long idVehiculo;
+
 
     }
 }
