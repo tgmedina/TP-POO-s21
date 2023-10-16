@@ -8,7 +8,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.printf("Bienvenido al Sistema de Gestion de Stock \n");
         int f;
-        String a;
 
         do {
             System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar\n): ");
@@ -28,13 +27,7 @@ public class Main {
             switch (f) {
                 case 1:
                     //metodo de alta de unidades
-                    System.out.println("Indique si la unidad es 0KM(n) o usada(u): \n");
-                    a = sc.next().toLowerCase();
-                    while(a != "n" && a !="u"); {
-                        System.out.println("Ingreso una opción invalida. \n Ingrese 'n' si la unidad es nueva, o 'u' si es usada: \n");
-                        a = sc.next().toLowerCase();
-                    }
-
+                    altaVehiculo();
                     break;
                 case 2:
                     //Clase de Busqueda de unidad por ID
@@ -51,8 +44,7 @@ public class Main {
                     System.out.println("Saliendo del sistema \n Muchas gracias por elegirnos");
                     try {
                         Thread.sleep(5000);
-                    }
-                    catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
                     break;
@@ -66,10 +58,77 @@ public class Main {
 
     }
 
-    public void AltaVehiculo(){
-        String cui;
-        long idVehiculo;
+    public static void altaVehiculo() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Indique si la/s unidad/es es/son 0KM(n) o usada/s(u): \n");
+        String nuevoUsado = sc.next().toLowerCase();
+        while (nuevoUsado != "n" && nuevoUsado != "u") ;
+        {
+            System.out.println("Ingreso una opción invalida. \n Ingrese 'n' si la unidad es nueva, o 'u' si es usada: \n");
+            nuevoUsado = sc.next().toLowerCase();
+        }
+        System.out.println("Indique cuantas unidades quiere dar de alta: ");
+        int cantidadAlta = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Indique si es/son moto/s (m) o cuatriciclo/s(c): ");
+        String cuatriMoto = sc.next().toLowerCase();
+        while (cuatriMoto != "m" && cuatriMoto != "c") {
+            System.out.println("Ingreso una opción inválida, intente de nuevo: ");
+            cuatriMoto = sc.next().toLowerCase();
+        }
+        System.out.println("Ingrese marca: ");
+        String marca = sc.nextLine();
+        System.out.println("Ingrese modelo: ");
+        String modelo = sc.nextLine();
+        /*El cui se obtiene de los primeros 3 caracteres de la marca, los primeros 3 caracteres del modelo, los 3
+        caracteres del color y el año.
+         */
+        String cui="";
+        if (marca.length()>=3){
+            cui = marca.substring(0,3);
+        } else if (marca.length()==2) {
+            cui = marca.substring(0,2);
+        } else if (marca.length()==1) {
+            cui = marca.substring(0,1);
+        }
+        if (modelo.length()>=3){
+            cui = cui + modelo.substring(0,3);
+        } else if (modelo.length()==2) {
+            cui = cui + modelo.substring(0,2);
+        } else if (modelo.length()==1) {
+            cui = cui + modelo.substring(0,1);
+        }
+        System.out.println("Ingrese país de fabricación: ");
+        String paisFabricacion = sc.nextLine();
+        System.out.println("Ingrese color: ");
+        String color = sc.nextLine();
+        System.out.println("Ingrese año de Fabricación: ");
+        long anioFabricacion = sc.nextLong();
+        sc.nextLine();
+        cui = cui + color + anioFabricacion;
+        System.out.println("Ingrese cilindrada: ");
+        int cilindrada = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Ingrese si el motor es dos(2) o cuatro(4) tiempos: ");
+        int tipoMotor = sc.nextInt();
+        System.out.println("Ingrese tipo de refrigeración: ");
+        String tipoRefrigeracion = sc.nextLine();
+        System.out.println("Ingrese capacidad del tanque de combustible: ");
+        int tanque = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Ingrese el tipo de freno de la rueda delantera: ");
+        String frenoDelantero = sc.nextLine();
+        System.out.println("Ingrese el tipo de freno de la rueda trasera: ");
+        String frenoTrasero = sc.nextLine();
+        System.out.println("Ingrese tipo de rodado: ");
+        String tipoRueda = sc.nextLine();
+
+        for (int i = 1; i == cantidadAlta; i++) {
+
+        }
 
 
     }
+    //public static
 }

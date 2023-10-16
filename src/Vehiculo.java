@@ -1,3 +1,5 @@
+import java.time.Instant;
+
 public abstract class Vehiculo {
     private String cui; //Codigo Unico de Inventario
     private long idVehiculo;
@@ -139,7 +141,7 @@ public abstract class Vehiculo {
     }
 
     public void setIdVehiculo(long idVehiculo) {
-        this.idVehiculo = idVehiculo;
+        this.idVehiculo = Instant.now().toEpochMilli();
     }
 
 
