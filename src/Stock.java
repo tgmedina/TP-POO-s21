@@ -2,7 +2,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class Stock {
-    private String idStock = Instant.now().toEpochMilli();
+    private long idStock = Instant.now().toEpochMilli();
     private ArrayList<Vehiculo> stock = new ArrayList<Vehiculo>();
     private String descripcionVehiculo;
     private String cui;
@@ -12,11 +12,11 @@ public class Stock {
         this.cui = cui;
     }
 
-    public String getIdStock() {
+    public long getIdStock() {
         return idStock;
     }
 
-    public void setIdStock(String idStock) {
+    public void setIdStock(long idStock) {
         this.idStock = idStock;
     }
 
