@@ -1,14 +1,15 @@
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class Stock {
-    private String idStock;
-    private ArrayList<Vehiculo> stock;
+    private String idStock = Instant.now().toEpochMilli();
+    private ArrayList<Vehiculo> stock = new ArrayList<Vehiculo>();
     private String descripcionVehiculo;
+    private String cui;
 
-    public Stock(String idStock, ArrayList<Vehiculo> stock, String descripcionVehiculo) {
-        this.idStock = idStock;
-        this.stock = stock;
+    public Stock( String descripcionVehiculo, String cui) {
         this.descripcionVehiculo = descripcionVehiculo;
+        this.cui = cui;
     }
 
     public String getIdStock() {
@@ -33,5 +34,13 @@ public class Stock {
 
     public void setDescripcionVehiculo(String descripcionVehiculo) {
         this.descripcionVehiculo = descripcionVehiculo;
+    }
+
+    public String getCui() {
+        return cui;
+    }
+
+    public void setCui(String cui) {
+        this.cui = cui;
     }
 }
