@@ -8,16 +8,16 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.printf("Bienvenido al Sistema de Gestion de Stock \n");
+        System.out.printf("Bienvenido al Sistema de Gestion de Stock\n");
         int f;
         do {
-            System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar): ");
-            System.out.printf("Opcion 1: Alta Unidad/es");
-            System.out.printf("Opcion 2: Buscar vehiculo por ID");
-            System.out.printf("Opcion 3: Eliminar Unidad");
-            System.out.printf("Opcion 4: Modificar datos de las unidades");
-            System.out.printf("Opcion 5: Obtener detalles de una unidad");
-            System.out.printf("Opcion 6: Control de Stock por ID / nombre de vehiculo / por Moto / Por cuatriciclo");
+            System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar):\n");
+            System.out.printf("Opcion 1: Alta Unidad/es\n");
+            System.out.printf("Opcion 2: Buscar vehiculo por ID\n");
+            System.out.printf("Opcion 3: Eliminar Unidad\n");
+            System.out.printf("Opcion 4: Modificar datos de las unidades\n");
+            System.out.printf("Opcion 5: Obtener detalles de una unidad\n");
+            System.out.printf("Opcion 6: Control de Stock por ID / nombre de vehiculo / por Moto / Por cuatriciclo\n Opción: ");
             while (!sc.hasNextInt()) {
                 System.out.println("Debe ingresar un numero, intente de nuevo por favor: ");
                 sc.next();
@@ -55,23 +55,25 @@ public class Main {
 
 
         } while (f != 0);
-
+        for (Stock stock : listaStock){
+            System.out.println(stock.getCui());
+        }
     }
 
     public static void altaVehiculo() {
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Indique si la/s unidad/es es/son 0KM(n) o usada/s(u): \n");
+        System.out.println("\nIndique si la/s unidad/es es/son 0KM(n) o usada/s(u):\n");
         String nuevoUsado = sc.nextLine().toLowerCase();
         while (!nuevoUsado.equals("n") && !nuevoUsado.equals("u")) {
-            System.out.println("Ingreso una opción invalida.\nIngrese 'n' si la unidad es nueva, o 'u' si es usada: \n");
+            System.out.println("\nIngreso una opción invalida.\nIngrese 'n' si la unidad es nueva, o 'u' si es usada: \n");
             nuevoUsado = sc.nextLine().toLowerCase();
         }
 
-        System.out.println("Indique si es/son moto/s (m) o cuatriciclo/s(c): ");
+        System.out.println("Indique si es/son moto/s (m) o cuatriciclo/s(c):\n");
         String cuatriMoto = sc.nextLine().toLowerCase();
         while (!cuatriMoto.equals("m") && !cuatriMoto.equals("c")) {
-            System.out.println("Ingreso una opción inválida, intente de nuevo: ");
+            System.out.println("\nIngreso una opción inválida, intente de nuevo:\n");
             cuatriMoto = sc.nextLine().toLowerCase();
         }
         System.out.println("Ingrese marca: ");
@@ -109,6 +111,7 @@ public class Main {
         sc.nextLine();
         System.out.println("Ingrese si el motor es dos(2) o cuatro(4) tiempos: ");
         int tipoMotor = sc.nextInt();
+        sc.nextLine();
         System.out.println("Ingrese tipo de refrigeración: ");
         String tipoRefrigeracion = sc.nextLine();
         System.out.println("Ingrese capacidad del tanque de combustible: ");
@@ -122,91 +125,97 @@ public class Main {
         String tipoRueda = sc.nextLine();
         boolean esATV = false;
         String tipoTraccion = "N/C";
-        if (cuatriMoto == "c") {
+        if (cuatriMoto.equals("c")) {
             System.out.println("Ingrese tipo de tracción (traccion doble o cuatro por cuatro): ");
             tipoTraccion = sc.nextLine();
             System.out.println("Ingrese 's' si es todo terreno, o 'n' si no lo es: ");
             String todoTerreno = sc.nextLine().toLowerCase();
-            while (todoTerreno != "s" && todoTerreno != "n") {
+            while (!todoTerreno.equals("s") && !todoTerreno.equals("n")) {
                 System.out.println("Ingreso una opción inválida, intente de nuevo: ");
                 todoTerreno = sc.next().toLowerCase();
             }
-            if (todoTerreno == "s") {
+            if (todoTerreno.equals("s")) {
                 esATV = true;
             }
         }
-        if (cuatriMoto == "m") {
-            if (nuevoUsado == "n") {
+        if (cuatriMoto.equals("m")) {
+            if (nuevoUsado.equals("n")) {
                 System.out.println("Indique cuantas unidades quiere dar de alta: ");
                 int cantidadAlta = sc.nextInt();
                 sc.nextLine();
+                boolean existeStock = false;
                 for (Stock hayStock : listaStock) {
-                    if (hayStock.getCui() != cui) {
-                        Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color, cui);
-                        listaStock.add(stock);
-                    } else {
-                        for (int i = 1; i == cantidadAlta; i++) {
+                    if (hayStock.getCui().equals(cui)) {
+                        for (int i = 1; i <= cantidadAlta; i++) {
                             Moto moto = new Moto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
                             hayStock.getStock().add(moto);
                         }
+                        existeStock = true;
+                        break;
                     }
                 }
-            } else { //usados
-                Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color, cui);
-                listaStock.add(stock);
-            }
-        } else {
-            if (nuevoUsado == "n") {
-                System.out.println("Indique cuantas unidades quiere dar de alta: ");
-                int cantidadAlta = sc.nextInt();
-                sc.nextLine();
-                for (Stock hayStock : listaStock) {
-                    if (hayStock.getCui() != cui) {
-                        Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color, cui);
-                        listaStock.add(stock);
-                    } else {
-                        for (int i = 1; i == cantidadAlta; i++) {
-                            Cuatriciclo cuatriciclo = new Cuatriciclo(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV);
-                            hayStock.getStock().add(cuatriciclo);
+                if (!existeStock) {
+                    Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color, cui);
+                    for (int i = 1; i <= cantidadAlta; i++) {
+                        Moto moto = new Moto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
+                        stock.getStock().add(moto);
+                    }
+                    listaStock.add(stock);
+                }
+            } else {
+                if (nuevoUsado.equals("n")) {
+                    System.out.println("Indique cuantas unidades quiere dar de alta: ");
+                    int cantidadAlta = sc.nextInt();
+                    sc.nextLine();
+                    for (Stock hayStock : listaStock) {
+                        if (hayStock.getCui() != cui) {
+                            Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color, cui);
+                            listaStock.add(stock);
+                        } else {
+                            for (int i = 1; i <= cantidadAlta; i++) {
+                                Cuatriciclo cuatriciclo = new Cuatriciclo(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV);
+                                hayStock.getStock().add(cuatriciclo);
+                            }
                         }
                     }
-                }
-            } else { //usados
-                if (cuatriMoto == "m") {
-                    System.out.println("Describa el estado del espejo derecho: ");
-                    String espejoDerecho = sc.nextLine();
-                    System.out.println("Describa el estado del espejo izquierdo: ");
-                    String espejoIzquierdo = sc.nextLine();
-                    System.out.println("Ingrese, del 1 al 100, el estado de la bateria: ");
-                    int estadoBateria = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Ingrese, del 1 al 100, el estado de la pintura: ");
-                    int estadoPintura = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Describa otros detalles: ");
-                    String otrosDetalles = sc.nextLine();
-                    MotoUsada moto = new MotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-                    Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + moto.getIdVehiculo(), cui);
-                    stock.getStock().add(moto);
+                } else { //usados
+                    if (cuatriMoto.equals("m")) {
+                        System.out.println("Describa el estado del espejo derecho: ");
+                        String espejoDerecho = sc.nextLine();
+                        System.out.println("Describa el estado del espejo izquierdo: ");
+                        String espejoIzquierdo = sc.nextLine();
+                        System.out.println("Ingrese, del 1 al 100, el estado de la bateria: ");
+                        int estadoBateria = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Ingrese, del 1 al 100, el estado de la pintura: ");
+                        int estadoPintura = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Describa otros detalles: ");
+                        String otrosDetalles = sc.nextLine();
+                        MotoUsada moto = new MotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
+                        Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + moto.getIdVehiculo(), cui);
+                        stock.getStock().add(moto);
 
-                } else {
-                    System.out.println("Describa el estado del espejo derecho: ");
-                    String espejoDerecho = sc.nextLine();
-                    System.out.println("Describa el estado del espejo izquierdo: ");
-                    String espejoIzquierdo = sc.nextLine();
-                    System.out.println("Ingrese, del 1 al 100, el estado de la bateria: ");
-                    int estadoBateria = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Ingrese, del 1 al 100, el estado de la pintura: ");
-                    int estadoPintura = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Describa otros detalles: ");
-                    String otrosDetalles = sc.nextLine();
-                    CuatricicloUsado cuatriciclo = new CuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-                    Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + cuatriciclo.getIdVehiculo(), cui);
-                    stock.getStock().add(cuatriciclo);
+                    } else {
+                        System.out.println("Describa el estado del espejo derecho: ");
+                        String espejoDerecho = sc.nextLine();
+                        System.out.println("Describa el estado del espejo izquierdo: ");
+                        String espejoIzquierdo = sc.nextLine();
+                        System.out.println("Ingrese, del 1 al 100, el estado de la bateria: ");
+                        int estadoBateria = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Ingrese, del 1 al 100, el estado de la pintura: ");
+                        int estadoPintura = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Describa otros detalles: ");
+                        String otrosDetalles = sc.nextLine();
+                        CuatricicloUsado cuatriciclo = new CuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
+                        Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + cuatriciclo.getIdVehiculo(), cui);
+                        stock.getStock().add(cuatriciclo);
+                    }
                 }
             }
+
         }
     }
 }
