@@ -55,8 +55,12 @@ public class Main {
 
 
         } while (f != 0);
-        for (Stock stock : listaStock){
+        for (Stock stock : listaStock) {
+            ArrayList<Vehiculo> vehiculos = stock.getStock();
             System.out.println(stock.getCui());
+            for (Vehiculo vehiculo : vehiculos) {
+                System.out.println(vehiculo.getIdVehiculo()+vehiculo.getFrenoDelantero());
+            }
         }
     }
 
@@ -149,6 +153,7 @@ public class Main {
                         for (int i = 1; i <= cantidadAlta; i++) {
                             Moto moto = new Moto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
                             hayStock.getStock().add(moto);
+                            moto.setIdVehiculo(moto.getIdVehiculo()+1);
                         }
                         existeStock = true;
                         break;
@@ -158,6 +163,7 @@ public class Main {
                     Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color, cui);
                     for (int i = 1; i <= cantidadAlta; i++) {
                         Moto moto = new Moto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
+                        moto.setIdVehiculo(moto.getIdVehiculo()+i);
                         stock.getStock().add(moto);
                     }
                     listaStock.add(stock);

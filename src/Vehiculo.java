@@ -143,5 +143,6 @@ public abstract class Vehiculo {
     public void setIdVehiculo(long idVehiculo) {
         this.idVehiculo = idVehiculo;
     }
+
 }
 
