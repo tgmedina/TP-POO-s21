@@ -14,10 +14,11 @@ public class Main {
             System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar):\n");
             System.out.printf("Opcion 1: Alta Unidad/es\n");
             System.out.printf("Opcion 2: Buscar vehiculo por marca y modelo\n");
-            System.out.printf("Opcion 3: Eliminar Unidad\n");
-            System.out.printf("Opcion 4: Modificar datos de las unidades\n");
-            System.out.printf("Opcion 5: Obtener detalles de una unidad\n");
-            System.out.printf("Opcion 6: Control de Stock por ID / nombre de vehiculo / por Moto / Por cuatriciclo\n Opción: ");
+            System.out.printf("Opcion 2: Buscar vehiculos Moto o Cuatriciclo\n");
+            System.out.printf("Opcion 4: Eliminar Unidad\n");
+            System.out.printf("Opcion 5: Modificar datos de las unidades\n");
+            System.out.printf("Opcion 6: Obtener detalles de una unidad\n");
+            System.out.printf("Opcion 7: Control de Stock por CUI de vehiculo\nOpción: ");
             while (!sc.hasNextInt()) {
                 System.out.println("Debe ingresar un numero, intente de nuevo por favor: ");
                 sc.next();
@@ -40,6 +41,8 @@ public class Main {
                 case 5:
                     break;
                 case 6:
+                    break;
+                case 7:
                     break;
                 case 0:
                     System.out.println("Saliendo del sistema \n Muchas gracias por elegirnos");
