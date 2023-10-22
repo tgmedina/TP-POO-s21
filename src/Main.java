@@ -1,20 +1,22 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     private static ArrayList<Stock> listaStock = new ArrayList<Stock>();
+    private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+
         System.out.printf("Bienvenido al Sistema de Gestion de Stock\n");
         int f;
         do {
             System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar):\n");
             System.out.printf("Opcion 1: Alta Unidad/es\n");
             System.out.printf("Opcion 2: Buscar vehiculo por marca y modelo\n");
-            System.out.printf("Opcion 2: Buscar vehiculos Moto o Cuatriciclo\n");
+            System.out.printf("Opcion 3: Listado de vehiculos usados/nuevos\n");
             System.out.printf("Opcion 4: Eliminar Unidad\n");
             System.out.printf("Opcion 5: Modificar datos de las unidades\n");
             System.out.printf("Opcion 6: Obtener detalles de una unidad\n");
@@ -35,8 +37,10 @@ public class Main {
                     busquedaCui();
                     break;
                 case 3:
+                    listadoDeVehiculos();
                     break;
                 case 4:
+                    eliminarUnidad();
                     break;
                 case 5:
                     break;
@@ -64,10 +68,11 @@ public class Main {
                 System.out.println(vehiculo.getIdVehiculo() + vehiculo.getFrenoDelantero());
             }
         }
+        sc.close();
     }
 
     public static void altaVehiculo() {
-        Scanner sc = new Scanner(System.in);
+
         System.out.println("\nIndique si la/s unidad/es es/son 0KM(n) o usada/s(u):\n");
         String nuevoUsado = sc.nextLine().toLowerCase();
         while (!nuevoUsado.equals("n") && !nuevoUsado.equals("u")) {
@@ -238,7 +243,7 @@ public class Main {
     }
 
     private static void busquedaCui() {
-        Scanner sc = new Scanner(System.in);
+
         ArrayList<Vehiculo> listaCui = new ArrayList<Vehiculo>();
         long anioFabricacion = 0;
         String cuiBusqueda = "";
@@ -267,22 +272,122 @@ public class Main {
         if (!color.isEmpty()) {
             cuiBusqueda = cuiBusqueda + color;
         }
-        if (anioFabricacion!=0){
+        if (anioFabricacion != 0) {
             cuiBusqueda = cuiBusqueda + anioFabricacion;
         }
-        for(Stock stock:listaStock){
+        for (Stock stock : listaStock) {
             ArrayList<Vehiculo> vehiculos = stock.getStock();
-            for(Vehiculo vehiculo: vehiculos){
-                if(vehiculo.getCui().contains(cuiBusqueda)){
+            for (Vehiculo vehiculo : vehiculos) {
+                if (vehiculo.getCui().contains(cuiBusqueda)) {
                     listaCui.add(vehiculo);
                 }
             }
         }
         System.out.println("A continuacion se presentaran los resultados:");
         System.out.println("ID Veh\t\tCUI\t\tMarca\tModelo\tAño Fab\tNac\tColor\tcc");
-        for(Vehiculo vehiculo:listaCui){
+        for (Vehiculo vehiculo : listaCui) {
             System.out.println(vehiculo.getIdVehiculo() + "\t\t" + vehiculo.getCui() + "\t\t" + vehiculo.getMarca() + "\t" + vehiculo.getModelo() + "\t" + vehiculo.getAnioFabricacion() + "\t" + vehiculo.getPaisFabricacion() + "\t" + vehiculo.getColor() + "\t" + vehiculo.getCilindrada());
         }
     }
+
+    public static void listadoDeVehiculos() {
+        ArrayList<Stock> listaVehiculos = new ArrayList<Stock>();
+        System.out.println("Ingrese 'n' (0 KM) o 'u' (usados) para desplegar sus correspondientes listas:");
+        String nuevoUsado = sc.nextLine();
+        if (nuevoUsado.equals("n")) {
+            for (Stock stock : listaStock) {
+                for (Vehiculo vehiculo : stock.getStock()) {
+                    if (vehiculo instanceof Moto || vehiculo instanceof Cuatriciclo) {
+                        listaVehiculos.add(stock);
+                    }
+                }
+            }
+
+        } else if (nuevoUsado.equals("u")) {
+            for (Stock stock : listaStock) {
+                for (Vehiculo vehiculo : stock.getStock()) {
+                    if (vehiculo instanceof MotoUsada || vehiculo instanceof CuatricicloUsado) {
+                        listaVehiculos.add(stock);
+                    }
+                }
+            }
+        } else {
+            System.out.println("Ingreso una opción invalida, vuelva a intentar");
+        }
+
+        if (!listaVehiculos.isEmpty()) {
+            System.out.println(" |   CUI     |    Marca    |    Modelo    |  Cilindrada  |  Color  |  Año Fab |   Id Vehiculo   |");
+            System.out.println(" --------------------------------------------------------------------------| ");
+            for (Stock vehiculo : listaVehiculos) {
+                ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+                for (Vehiculo unVehiculo : vehiculo.getStock()) {
+                    System.out.println(" |" + unVehiculo.getCui() + "    |" + unVehiculo.getMarca() + "    |" + unVehiculo.getModelo() + "    |" + unVehiculo.getCilindrada() + "    |" + unVehiculo.getColor() + "    |" + unVehiculo.getAnioFabricacion() + "    |" + unVehiculo.getIdVehiculo());
+                }
+            }
+        }
+    }
+
+    private static void eliminarUnidad() {
+        ArrayList<Vehiculo> listaVehiculo = new ArrayList<Vehiculo>();
+        System.out.println("¿Desea eliminar una unidad 0KM (n) o usada (u)?");
+        String nuevoUsado = sc.nextLine();
+        if (nuevoUsado.equals("n")) {
+            System.out.println("Ingrese el CUI de la unidad que quiere eliminar");
+            String cuiAEliminar = sc.nextLine();
+            System.out.println("Ingrese la cantidad que desea eliminar:");
+            int cantidadAEliminar = sc.nextInt();
+            sc.nextLine();
+            Iterator<Stock> recorredor = listaStock.iterator();
+            boolean hayUnidad = false;
+            while (recorredor.hasNext()) {
+                Stock stock = recorredor.next();
+
+                int cantVehiculo = stock.getStock().size();
+                if (cuiAEliminar.equals(stock.getCui())) {
+                    if (cantVehiculo > cantidadAEliminar) {
+                        for (int i = 0; i < cantidadAEliminar; i++) {
+                            stock.getStock().remove(stock.getStock().size() - 1);
+                        }
+                    } else if (cantVehiculo == cantidadAEliminar) {
+                        stock.getStock().clear();
+                        recorredor.remove();
+                    } else {
+                        System.out.println("La cantidad de elemenos a eliminar supera el Stock");
+                    }
+                    hayUnidad = true;
+                    break;
+                }
+                if(!hayUnidad){
+                    System.out.println("La unidad que esta buscando no existe o es erronea, intente de nuevo");
+                }
+            }
+        } else if (nuevoUsado.equals("u")) {
+            System.out.println("Ingrese el CUI de la unidad que quiere eliminar");
+            String cuiAEliminarUsado = sc.nextLine();
+            System.out.println("Ingrese el Id del vehiculo que desea eliminar");
+            long idVaEliminar = sc.nextLong();
+            boolean hayUnidad = false;
+            sc.nextLine();
+            Iterator<Stock> recorredor = listaStock.iterator();
+            while (recorredor.hasNext()) {
+                Stock stock = recorredor.next();
+                for (Vehiculo vehiculo : stock.getStock()) {
+                    if (vehiculo.getIdVehiculo() == idVaEliminar) {
+                        stock.getStock().clear();
+                        recorredor.remove();
+                        hayUnidad = true;
+                        break;
+                    }
+                }
+            }
+            if(!hayUnidad){
+                System.out.println("La unidad que esta buscando no existe o es erronea, intente de nuevo");
+            }
+        } else {
+            System.out.println("Ingreso una opción invalida, vuelva a intentar");
+        }
+
+    }
 }
+
 
