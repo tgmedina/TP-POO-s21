@@ -13,14 +13,14 @@ public class Main {
         System.out.printf("Bienvenido al Sistema de Gestion de Stock\n");
         int f;
         do {
-            System.out.printf("Ingrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar):\n");
+            System.out.printf("\nIngrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar):\n");
             System.out.printf("Opcion 1: Alta Unidad/es\n");
             System.out.printf("Opcion 2: Buscar vehiculo por marca y modelo\n");
             System.out.printf("Opcion 3: Listado de vehiculos usados/nuevos\n");
             System.out.printf("Opcion 4: Eliminar Unidad\n");
-            System.out.printf("Opcion 5: Modificar datos de las unidades\n");
-            System.out.printf("Opcion 6: Obtener detalles de una unidad\n");
-            System.out.printf("Opcion 7: Control de Stock por CUI de vehiculo\nOpción: ");
+            System.out.printf("Opcion 5: Modificar datos de las unidades vacias\n");
+            System.out.printf("Opcion 6: Obtener detalles de una unidad\nOpción:");
+
             while (!sc.hasNextInt()) {
                 System.out.println("Debe ingresar un numero, intente de nuevo por favor: ");
                 sc.next();
@@ -29,11 +29,9 @@ public class Main {
             sc.nextLine();
             switch (f) {
                 case 1:
-                    //metodo de alta de unidades
                     altaVehiculo();
                     break;
                 case 2:
-                    //metodo de Busqueda de unidad por cui
                     busquedaCui();
                     break;
                 case 3:
@@ -43,13 +41,14 @@ public class Main {
                     eliminarUnidad();
                     break;
                 case 5:
+                    modificarVehiculo();
                     break;
                 case 6:
+                    detallesVehiculos();
                     break;
-                case 7:
-                    break;
+
                 case 0:
-                    System.out.println("Saliendo del sistema \n Muchas gracias por elegirnos");
+                    System.out.println("Saliendo del sistema\nMuchas gracias por elegirnos");
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
@@ -57,7 +56,7 @@ public class Main {
                     }
                     break;
                 default:
-                    System.out.println("Ingreso una opción no validad, intente de nuevo por favor: ");
+                    System.out.println("Ingreso una opción no validad, intente de nuevo por favor:");
                     break;
             }
         } while (f != 0);
@@ -73,16 +72,16 @@ public class Main {
 
     public static void altaVehiculo() {
 
-        System.out.println("\nIndique si la/s unidad/es es/son 0KM(n) o usada/s(u):\n");
+        System.out.println("\nIndique si la/s unidad/es es/son 0KM(n) o usada/s(u):");
         String nuevoUsado = sc.nextLine().toLowerCase();
         while (!nuevoUsado.equals("n") && !nuevoUsado.equals("u")) {
-            System.out.println("\nIngreso una opción invalida.\nIngrese 'n' si la unidad es nueva, o 'u' si es usada: \n");
+            System.out.println("Ingreso una opción invalida.\nIngrese 'n' si la unidad es nueva, o 'u' si es usada:");
             nuevoUsado = sc.nextLine().toLowerCase();
         }
-        System.out.println("Indique si es/son moto/s (m) o cuatriciclo/s(c):\n");
+        System.out.println("Indique si es/son moto/s (m) o cuatriciclo/s(c):");
         String cuatriMoto = sc.nextLine().toLowerCase();
         while (!cuatriMoto.equals("m") && !cuatriMoto.equals("c")) {
-            System.out.println("\nIngreso una opción inválida, intente de nuevo:\n");
+            System.out.println("Ingreso una opción inválida, intente de nuevo:");
             cuatriMoto = sc.nextLine().toLowerCase();
         }
         System.out.println("Ingrese marca: ");
@@ -135,12 +134,12 @@ public class Main {
         boolean esATV = false;
         String tipoTraccion = "N/C";
         if (cuatriMoto.equals("c")) {
-            System.out.println("Ingrese tipo de tracción (traccion doble o cuatro por cuatro): ");
+            System.out.println("Ingrese tipo de tracción (traccion doble o cuatro por cuatro):");
             tipoTraccion = sc.nextLine();
-            System.out.println("Ingrese 's' si es todo terreno, o 'n' si no lo es: ");
+            System.out.println("Ingrese 's' si es todo terreno, o 'n' si no lo es:");
             String todoTerreno = sc.nextLine().toLowerCase();
             while (!todoTerreno.equals("s") && !todoTerreno.equals("n")) {
-                System.out.println("Ingreso una opción inválida, intente de nuevo: ");
+                System.out.println("Ingreso una opción inválida, intente de nuevo:");
                 todoTerreno = sc.next().toLowerCase();
             }
             if (todoTerreno.equals("s")) {
@@ -149,7 +148,7 @@ public class Main {
         }
         if (nuevoUsado.equals("n")) { //Caso Moto Nueva
             if (cuatriMoto.equals("m")) {
-                System.out.println("Indique cuantas unidades quiere dar de alta: ");
+                System.out.println("Indique cuantas unidades quiere dar de alta:");
                 int cantidadAlta = sc.nextInt();
                 sc.nextLine();
                 boolean existeStock = false;
@@ -174,7 +173,7 @@ public class Main {
                     listaStock.add(stock);
                 }
             } else { // Caso Cuatri Nueva
-                System.out.println("Indique cuantas unidades quiere dar de alta: ");
+                System.out.println("Indique cuantas unidades quiere dar de alta:");
                 int cantidadAlta = sc.nextInt();
                 sc.nextLine();
                 boolean existeStock = false;
@@ -247,7 +246,7 @@ public class Main {
         ArrayList<Vehiculo> listaCui = new ArrayList<Vehiculo>();
         long anioFabricacion = 0;
         String cuiBusqueda = "";
-        System.out.println("Ingrese la marca del vehiculo que desea encontrar: ");
+        System.out.println("\nIngrese la marca del vehiculo que desea encontrar: ");
         String marca = sc.nextLine();
         System.out.println("Ingrese el modelo del vehiculo: ");
         String modelo = sc.nextLine();
@@ -284,9 +283,11 @@ public class Main {
             }
         }
         System.out.println("A continuacion se presentaran los resultados:");
-        System.out.println("ID Veh\t\tCUI\t\tMarca\tModelo\tAño Fab\tNac\tColor\tcc");
+        /*System.out.println("ID Veh\t\tCUI\t\tMarca\tModelo\tAño Fab\tNac\tColor\tcc");*/
+        System.out.printf("|%-15s|%-15s|%-15s|%-15s|%-10s|%-10s|%-10s|%-5s|%n", "Id Veh", "CUI", "Marca", "Modelo", "Año Fab.", "Nac", "Color", "CC");
+        System.out.println("|------------------------------------------------------------------------------------------------------| ");
         for (Vehiculo vehiculo : listaCui) {
-            System.out.println(vehiculo.getIdVehiculo() + "\t\t" + vehiculo.getCui() + "\t\t" + vehiculo.getMarca() + "\t" + vehiculo.getModelo() + "\t" + vehiculo.getAnioFabricacion() + "\t" + vehiculo.getPaisFabricacion() + "\t" + vehiculo.getColor() + "\t" + vehiculo.getCilindrada());
+            System.out.printf("|%-15d|%-15s|%-15s|%-15s|%-10d|%-10s|%-10s|%-5d|%n", vehiculo.getIdVehiculo(),vehiculo.getCui(), vehiculo.getMarca(), vehiculo.getModelo(),vehiculo.getAnioFabricacion(),vehiculo.getPaisFabricacion(),vehiculo.getColor(),vehiculo.getCilindrada());
         }
     }
 
@@ -299,15 +300,16 @@ public class Main {
                 for (Vehiculo vehiculo : stock.getStock()) {
                     if (vehiculo instanceof Moto || vehiculo instanceof Cuatriciclo) {
                         listaVehiculos.add(stock);
+                        break;
                     }
                 }
             }
-
         } else if (nuevoUsado.equals("u")) {
             for (Stock stock : listaStock) {
                 for (Vehiculo vehiculo : stock.getStock()) {
                     if (vehiculo instanceof MotoUsada || vehiculo instanceof CuatricicloUsado) {
                         listaVehiculos.add(stock);
+                        break;
                     }
                 }
             }
@@ -316,19 +318,21 @@ public class Main {
         }
 
         if (!listaVehiculos.isEmpty()) {
-            System.out.println(" |   CUI     |    Marca    |    Modelo    |  Cilindrada  |  Color  |  Año Fab |   Id Vehiculo   |");
-            System.out.println(" --------------------------------------------------------------------------| ");
-            for (Stock vehiculo : listaVehiculos) {
-                ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-                for (Vehiculo unVehiculo : vehiculo.getStock()) {
-                    System.out.println(" |" + unVehiculo.getCui() + "    |" + unVehiculo.getMarca() + "    |" + unVehiculo.getModelo() + "    |" + unVehiculo.getCilindrada() + "    |" + unVehiculo.getColor() + "    |" + unVehiculo.getAnioFabricacion() + "    |" + unVehiculo.getIdVehiculo());
+            System.out.printf("|%-15s|%-10s|%-15s|%-15s|%-10s|%-10s|%-15s|%n", "CUI", "Marca", "Modelo", "Cilindrada", "Color", "Año Fab", "Id Vehiculo");
+            System.out.println("|------------------------------------------------------------------------------------------------| ");
+            Iterator<Stock> recorredor = listaVehiculos.iterator();
+            while(recorredor.hasNext()){
+                Stock stock = recorredor.next();
+                for (Vehiculo unVehiculo : stock.getStock()) {
+                    System.out.printf("|%-15s|%-10s|%-15s|%-15d|%-10s|%-10d|%-15d|%n", unVehiculo.getCui(), unVehiculo.getMarca(), unVehiculo.getModelo(), unVehiculo.getCilindrada(), unVehiculo.getColor(), unVehiculo.getAnioFabricacion(), unVehiculo.getIdVehiculo());
                 }
             }
+
         }
     }
 
     private static void eliminarUnidad() {
-        ArrayList<Vehiculo> listaVehiculo = new ArrayList<Vehiculo>();
+
         System.out.println("¿Desea eliminar una unidad 0KM (n) o usada (u)?");
         String nuevoUsado = sc.nextLine();
         if (nuevoUsado.equals("n")) {
@@ -357,7 +361,7 @@ public class Main {
                     hayUnidad = true;
                     break;
                 }
-                if(!hayUnidad){
+                if (!hayUnidad) {
                     System.out.println("La unidad que esta buscando no existe o es erronea, intente de nuevo");
                 }
             }
@@ -380,12 +384,18 @@ public class Main {
                     }
                 }
             }
-            if(!hayUnidad){
+            if (!hayUnidad) {
                 System.out.println("La unidad que esta buscando no existe o es erronea, intente de nuevo");
             }
         } else {
             System.out.println("Ingreso una opción invalida, vuelva a intentar");
         }
+
+    }
+    private static void modificarVehiculo(){
+
+    }
+    private static void detallesVehiculos(){
 
     }
 }
