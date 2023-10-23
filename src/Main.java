@@ -3,8 +3,7 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+
 public class Main {
     private static ArrayList<Stock> listaStock = new ArrayList<Stock>();
     private static Scanner sc = new Scanner(System.in);
@@ -207,7 +206,7 @@ public class Main {
                 System.out.println("Describa otros detalles: ");
                 String otrosDetalles = sc.nextLine();
                 MotoUsada moto = new MotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-                moto.setCui(moto.getCui() + (String.valueOf(moto.getIdVehiculo()).substring(0, 3)));
+                moto.setCui(moto.getCui() + (String.valueOf(moto.getIdVehiculo()).substring(String.valueOf(moto.getCui()).length() - 2)));
                 Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + moto.getIdVehiculo(), moto.getCui());
                 stock.getStock().add(moto);
 
@@ -227,7 +226,7 @@ public class Main {
                 System.out.println("Describa otros detalles: ");
                 String otrosDetalles = sc.nextLine();
                 CuatricicloUsado cuatriciclo = new CuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-                cuatriciclo.setCui(cuatriciclo.getCui() + (String.valueOf(cuatriciclo.getIdVehiculo()).substring(0, 3)));
+                cuatriciclo.setCui(cuatriciclo.getCui() + (String.valueOf(cuatriciclo.getIdVehiculo()).substring(String.valueOf(cuatriciclo.getIdVehiculo()).length()-2)));
                 Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + cuatriciclo.getIdVehiculo(), cuatriciclo.getCui());
                 stock.getStock().add(cuatriciclo);
                 listaStock.add(stock);
