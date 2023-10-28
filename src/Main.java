@@ -669,7 +669,7 @@ public class Main {
                     }
                     hayVehiculo = true;
                 }
-                break;
+
             }
         } else {
             System.out.println("No ingreso CUI alguno. Intente de nuevo.");
