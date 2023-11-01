@@ -1,7 +1,4 @@
-public class CuatricicloUsado extends Vehiculo {
-
-    private String tipoTraccion;
-    private Boolean esATV;
+public class CuatricicloUsado extends Cuatriciclo {
     private String espejoDerecho;
     private String espejoIzquierdo;
     private int estadoBateria;
@@ -9,16 +6,13 @@ public class CuatricicloUsado extends Vehiculo {
     private String otrosDetalles;
 
     public CuatricicloUsado(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoTraccion, Boolean esATV, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
-        super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
-        this.tipoTraccion = tipoTraccion;
-        this.esATV = esATV;
+        super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV);
         this.espejoDerecho = espejoDerecho;
         this.espejoIzquierdo = espejoIzquierdo;
         this.estadoBateria = estadoBateria;
         this.estadoPintura = estadoPintura;
         this.otrosDetalles = otrosDetalles;
     }
-
     public String getEspejoDerecho() {
         return espejoDerecho;
     }
@@ -59,19 +53,5 @@ public class CuatricicloUsado extends Vehiculo {
         this.otrosDetalles = otrosDetalles;
     }
 
-    public String getTipoTraccion() {
-        return tipoTraccion;
-    }
 
-    public void setTipoTraccion(String tipoTraccion) {
-        this.tipoTraccion = tipoTraccion;
-    }
-
-    public Boolean getEsATV() {
-        return esATV;
-    }
-
-    public void setEsATV(Boolean esATV) {
-        this.esATV = esATV;
-    }
 }

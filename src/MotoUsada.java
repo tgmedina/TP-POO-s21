@@ -1,4 +1,4 @@
-public class MotoUsada extends Vehiculo{
+public class MotoUsada extends Moto{
     private String espejoDerecho;
     private String espejoIzquierdo;
     private int estadoBateria;
