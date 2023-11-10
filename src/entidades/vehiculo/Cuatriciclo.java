@@ -1,3 +1,5 @@
+package entidades.vehiculo;
+
 public class Cuatriciclo extends Vehiculo {
 
     private String tipoTraccion;

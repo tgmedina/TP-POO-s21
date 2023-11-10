@@ -1,9 +1,16 @@
-public class MotoUsada extends Moto{
+package entidades.vehiculo;
+
+import entidades.vehiculo.Moto;
+import interfaces.permisos.VehiculoUsado;
+
+public class MotoUsada extends Moto implements VehiculoUsado {
     private String espejoDerecho;
     private String espejoIzquierdo;
     private int estadoBateria;
     private int estadoPintura;
     private String otrosDetalles;
+    private boolean tieneDeuda = false;
+    private boolean impedimentoJudicial = false;
 
     public MotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
         super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
@@ -53,4 +60,32 @@ public class MotoUsada extends Moto{
     public void setOtrosDetalles(String otrosDetalles) {
         this.otrosDetalles = otrosDetalles;
     }
+
+    @Override
+    public void tieneDeuda() {
+
+    }
+
+    @Override
+    public void impedimientoJudicial() {
+
+    }
+
+    @Override
+    public void esDeudor() {
+
+    }
+
+    @Override
+    public String pesaImpedimientoJud(String impJud) {
+        if (impJud.equals("s")){
+            impedimentoJudicial=true;
+            return "Se actualizo estado de los impedimentos judiciales.";
+        }
+        else{
+            return "No se especificó o no cuenta con impedimento judicial";
+        }
+    }
+
+
 }

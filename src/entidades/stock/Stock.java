@@ -1,3 +1,7 @@
+package entidades.stock;
+
+import entidades.vehiculo.Vehiculo;
+
 import java.time.Instant;
 import java.util.ArrayList;
 

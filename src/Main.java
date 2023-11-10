@@ -1,3 +1,7 @@
+import entidades.Consecionaria;
+import entidades.stock.Stock;
+import entidades.vehiculo.*;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -6,11 +10,12 @@ import java.util.Scanner;
 
 public class Main {
     private static ArrayList<Stock> listaStock = new ArrayList<Stock>();
+    private static Consecionaria consecionaria = new Consecionaria();
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        System.out.printf("Bienvenido al Sistema de Gestion de Stock\n");
+        System.out.printf("Bienvenido al Sistema de Gestion de entidades.stock.Stock\n");
         int f;
         do {
             System.out.printf("\nIngrese el numero correspondiente de las siguientes opciones (Presione 0 para finalizar):\n");
@@ -139,7 +144,18 @@ public class Main {
                 esATV = true;
             }
         }
-        if (nuevoUsado.equals("n")) { //Caso Moto Nueva
+        if(nuevoUsado.equals("n")){
+            System.out.println("Indique la cantidad de unidades que quiere dar de alta:");
+            int cantidadAlta=sc.nextInt();
+            sc.nextLine();
+            if(cuatriMoto.equals("m")){
+                consecionaria.altaMoto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, cantidadAlta);
+            }
+            else{
+                consecionaria.altaCuatriciclo(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, cantidadAlta);
+            }
+        }
+        /*if (nuevoUsado.equals("n")) { //Caso entidades.vehiculo.Moto Nueva
             if (cuatriMoto.equals("m")) {
                 System.out.println("Indique cuantas unidades quiere dar de alta:");
                 int cantidadAlta = sc.nextInt();
@@ -232,7 +248,7 @@ public class Main {
                 listaStock.add(stock);
                 System.out.println("");
             }
-        }
+        }*/
     }
 
     private static void busquedaCui() {
@@ -277,7 +293,7 @@ public class Main {
             }
         }
         System.out.println("A continuacion se presentaran los resultados:");
-        /*System.out.println("ID Veh\t\tCUI\t\tMarca\tModelo\tAño Fab\tNac\tColor\tcc");*/
+
         System.out.printf("|%-15s|%-15s|%-15s|%-15s|%-10s|%-10s|%-10s|%-5s|%n", "Id Veh", "CUI", "Marca", "Modelo", "Año Fab.", "Nac", "Color", "CC");
         System.out.println("|------------------------------------------------------------------------------------------------------| ");
         for (Vehiculo vehiculo : listaCui) {
@@ -312,13 +328,14 @@ public class Main {
         }
 
         if (!listaVehiculos.isEmpty()) {
-            System.out.printf("|%-15s|%-10s|%-15s|%-15s|%-10s|%-10s|%-15s|%n", "CUI", "Marca", "Modelo", "Cilindrada", "Color", "Año Fab", "Id Vehiculo");
+            System.out.printf("|%-15s|%-10s|%-15s|%-15s|%-10s|%-10s|%-15s|%n", "CUI", "Marca", "Modelo", "Cilindrada", "Color", "Año Fab", "Id entidades.vehiculo.Vehiculo");
             System.out.println("|------------------------------------------------------------------------------------------------| ");
             Iterator<Stock> recorredor = listaVehiculos.iterator();
             while (recorredor.hasNext()) {
                 Stock stock = recorredor.next();
                 for (Vehiculo unVehiculo : stock.getStock()) {
                     System.out.printf("|%-15s|%-10s|%-15s|%-15d|%-10s|%-10d|%-15d|%n", unVehiculo.getCui(), unVehiculo.getMarca(), unVehiculo.getModelo(), unVehiculo.getCilindrada(), unVehiculo.getColor(), unVehiculo.getAnioFabricacion(), unVehiculo.getIdVehiculo());
+//                    System.out.println(unVehiculo.listadoDeVehiculos());
                 }
             }
 
@@ -349,7 +366,7 @@ public class Main {
                         stock.getStock().clear();
                         recorredor.remove();
                     } else {
-                        System.out.println("La cantidad de elemenos a eliminar supera el Stock");
+                        System.out.println("La cantidad de elemenos a eliminar supera el entidades.stock.Stock");
                     }
                     hayUnidad = true;
                     break;
@@ -491,7 +508,7 @@ public class Main {
                             vehiculo.setTipoRueda(tipoRueda);
                         }
                         if (vehiculo instanceof Cuatriciclo) {
-                            //Cuatriciclo cuatriciclo = (Cuatriciclo) vehiculo;
+                            //entidades.vehiculo.Cuatriciclo cuatriciclo = (entidades.vehiculo.Cuatriciclo) vehiculo;
                             if (!tipoTraccion.isEmpty()) {
                                 ((Cuatriciclo) vehiculo).setTipoTraccion(tipoTraccion);
                                 //cuatriciclo.setTipoTraccion(tipoTraccion);
@@ -563,7 +580,7 @@ public class Main {
                             vehiculo.setTipoRueda(tipoRueda);
                         }
                         if (vehiculo instanceof MotoUsada) {
-                            //MotoUsada motoUsada = (MotoUsada) vehiculo;
+                            //entidades.vehiculo.MotoUsada motoUsada = (entidades.vehiculo.MotoUsada) vehiculo;
 
                             if (!espejoDerecho.isEmpty()) {
                                 ((MotoUsada) vehiculo).setEspejoDerecho(espejoDerecho);
@@ -582,7 +599,7 @@ public class Main {
                             }
 
                         } else if (vehiculo instanceof CuatricicloUsado) {
-                            //CuatricicloUsado cuatricicloUsado = (CuatricicloUsado) vehiculo;
+                            //entidades.vehiculo.CuatricicloUsado cuatricicloUsado = (entidades.vehiculo.CuatricicloUsado) vehiculo;
                             if (!espejoDerecho.isEmpty()) {
                                 ((CuatricicloUsado) vehiculo).setEspejoDerecho(espejoDerecho);
                             }
@@ -625,7 +642,7 @@ public class Main {
                     System.out.println("---------------Datos de la unidad---------------");
                     System.out.println("------------------------------------------------");
                     System.out.printf("|%-15s|%-32s|%n", "CUI", unVehiculo.getCui());
-                    System.out.printf("|%-15s|%-32d|%n", "ID Vehiculo", unVehiculo.getIdVehiculo());
+                    System.out.printf("|%-15s|%-32d|%n", "ID entidades.vehiculo.Vehiculo", unVehiculo.getIdVehiculo());
                     System.out.printf("|%-15s|%-32s|%n", "Marca", unVehiculo.getMarca());
                     System.out.printf("|%-15s|%-32s|%n", "Modelo", unVehiculo.getModelo());
                     System.out.printf("|%-15s|%-32s|%n", "Nacionalidad", unVehiculo.getPaisFabricacion());

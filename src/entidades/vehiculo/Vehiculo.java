@@ -1,3 +1,5 @@
+package entidades.vehiculo;
+
 import java.time.Instant;
 
 public abstract class Vehiculo {
@@ -14,7 +16,6 @@ public abstract class Vehiculo {
     private int tanque;
     private String frenoDelantero;
     private String frenoTrasero;
-    private String tipoRueda;
 
     public Vehiculo(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda) {
         this.cui = cui;
@@ -31,6 +32,8 @@ public abstract class Vehiculo {
         this.frenoTrasero = frenoTrasero;
         this.tipoRueda = tipoRueda;
     }
+
+    private String tipoRueda;
 
     public String getCui() {
         return cui;
@@ -143,6 +146,14 @@ public abstract class Vehiculo {
     public void setIdVehiculo(long idVehiculo) {
         this.idVehiculo = idVehiculo;
     }
+
+
+    public String listadoDeVehiculos(String nuevoUsado){
+
+
+        return String.format("|%-15s|%-10s|%-15s|%-15d|%-10s|%-10d|%-15d|%n", cui, marca, modelo, cilindrada, color, anioFabricacion, idVehiculo);
+    }
+
 
 }
 
