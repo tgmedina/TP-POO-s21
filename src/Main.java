@@ -155,6 +155,25 @@ public class Main {
                 consecionaria.altaCuatriciclo(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, cantidadAlta);
             }
         }
+        else{
+            System.out.println("Describa el estado del espejo derecho: ");
+            String espejoDerecho = sc.nextLine();
+            System.out.println("Describa el estado del espejo izquierdo: ");
+            String espejoIzquierdo = sc.nextLine();
+            System.out.println("Ingrese, del 1 al 100, el estado de la bateria: ");
+            int estadoBateria = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Ingrese, del 1 al 100, el estado de la pintura: ");
+            int estadoPintura = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Describa otros detalles: ");
+            String otrosDetalles = sc.nextLine();
+            if(cuatriMoto.equals("m")){
+                consecionaria.altaMotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
+            } else{
+                consecionaria.altaCuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
+            }
+        }
         /*if (nuevoUsado.equals("n")) { //Caso entidades.vehiculo.Moto Nueva
             if (cuatriMoto.equals("m")) {
                 System.out.println("Indique cuantas unidades quiere dar de alta:");

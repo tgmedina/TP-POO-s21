@@ -12,13 +12,17 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
     protected boolean impedimentoJudicial = false;
 
     public CuatricicloUsado(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoTraccion, Boolean esATV, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
+
         super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV);
+        this.setCui(this.getCui() + (String.valueOf(this.getIdVehiculo()).substring(String.valueOf(this.getIdVehiculo()).length()-2)));
         this.espejoDerecho = espejoDerecho;
         this.espejoIzquierdo = espejoIzquierdo;
         this.estadoBateria = estadoBateria;
         this.estadoPintura = estadoPintura;
         this.otrosDetalles = otrosDetalles;
+
     }
+
     public String getEspejoDerecho() {
         return espejoDerecho;
     }

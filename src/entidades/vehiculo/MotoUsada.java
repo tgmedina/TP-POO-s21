@@ -14,6 +14,7 @@ public class MotoUsada extends Moto implements VehiculoUsado {
 
     public MotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
         super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
+        this.setCui(this.getCui() + (String.valueOf(this.getIdVehiculo()).substring(String.valueOf(this.getCui()).length() - 2)));
         this.espejoDerecho = espejoDerecho;
         this.espejoIzquierdo = espejoIzquierdo;
         this.estadoBateria = estadoBateria;
@@ -78,11 +79,10 @@ public class MotoUsada extends Moto implements VehiculoUsado {
 
     @Override
     public String pesaImpedimientoJud(String impJud) {
-        if (impJud.equals("s")){
-            impedimentoJudicial=true;
+        if (impJud.equals("s")) {
+            impedimentoJudicial = true;
             return "Se actualizo estado de los impedimentos judiciales.";
-        }
-        else{
+        } else {
             return "No se especificó o no cuenta con impedimento judicial";
         }
     }
