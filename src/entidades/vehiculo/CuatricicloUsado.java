@@ -63,6 +63,15 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
         this.otrosDetalles = otrosDetalles;
     }
 
+    @Override
+    public void modificaUnVehiculo(String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion, String paisFabricacion) {
+        super.modificaUnVehiculo(tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion);
+        if(!espejoDerecho.isEmpty()) this.espejoDerecho=espejoDerecho;
+        if(!espejoIzquierdo.isEmpty()) this.espejoIzquierdo=espejoIzquierdo;
+        if(estadoBateria>0) this.estadoBateria=estadoBateria;
+        if(estadoPintura>0) this.estadoPintura=estadoPintura;
+        if(!otroDetalle.isEmpty()) this.otrosDetalles=otroDetalle;
+    }
 
     @Override
     public void tieneDeuda() {

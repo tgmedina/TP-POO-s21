@@ -148,12 +148,22 @@ public abstract class Vehiculo {
     }
 
 
-    public String listadoDeVehiculos(String nuevoUsado){
+    public String listadoDeVehiculos(String nuevoUsado) {
 
 
         return String.format("|%-15s|%-10s|%-15s|%-15d|%-10s|%-10d|%-15d|%n", cui, marca, modelo, cilindrada, color, anioFabricacion, idVehiculo);
     }
 
+    public void modificaUnVehiculo(String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion, String paisFabricacion) {
+        if (!paisFabricacion.isEmpty()) this.paisFabricacion = paisFabricacion;
+        if (cilindrada > 0) this.cilindrada = cilindrada;
+        if (tipoMotor > 0) this.tipoMotor = tipoMotor;
+        if (!tipoRefrigeracion.isEmpty()) this.tipoRefrigeracion = tipoRefrigeracion;
+        if (tanque > 0) this.tanque = tanque;
+        if (!frenoDelantero.isEmpty()) this.frenoDelantero = frenoDelantero;
+        if (!frenoTrasero.isEmpty()) this.frenoTrasero = frenoTrasero;
+        if (!tipoRueda.isEmpty()) this.tipoRueda = tipoRueda;
+    }
 
 }
 

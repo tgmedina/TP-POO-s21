@@ -1,12 +1,10 @@
 package entidades;
 
 import entidades.stock.Stock;
-import entidades.vehiculo.Cuatriciclo;
-import entidades.vehiculo.CuatricicloUsado;
-import entidades.vehiculo.Moto;
-import entidades.vehiculo.MotoUsada;
+import entidades.vehiculo.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Consecionaria {
     private ArrayList<Stock> listaStock = new ArrayList<Stock>();
@@ -61,7 +59,7 @@ public class Consecionaria {
 
     public void altaMotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
         MotoUsada moto = new MotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-        moto.setCui(moto.getCui() + (String.valueOf(moto.getIdVehiculo()).substring(String.valueOf(moto.getCui()).length() - 2)));
+//        moto.setCui(moto.getCui() + (String.valueOf(moto.getIdVehiculo()).substring(String.valueOf(moto.getCui()).length() - 2)));
         Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + moto.getIdVehiculo(), moto.getCui());
         stock.getStock().add(moto);
         listaStock.add(stock);
@@ -75,4 +73,158 @@ public class Consecionaria {
         listaStock.add(stock);
     }
 
+    public String busquedaCui(String cuiBusqueda) {
+        ArrayList<Vehiculo> listaCui = new ArrayList<Vehiculo>();
+        for (Stock stock : listaStock) {
+            ArrayList<Vehiculo> vehiculos = stock.getStock();
+            for (Vehiculo vehiculo : vehiculos) {
+                if (vehiculo.getCui().contains(cuiBusqueda)) {
+                    listaCui.add(vehiculo);
+                }
+            }
+        }
+        if (!listaCui.isEmpty()) {
+            StringBuilder listaAString = new StringBuilder();
+            listaAString.append("|");
+            for (Vehiculo vehiculo : listaCui) {
+                listaAString.append(String.format(
+                        "%-15d|%-15s|%-15s|%-15s|%-10d|%-10s|%-10s|%-5d|%n",
+                        vehiculo.getIdVehiculo(),
+                        vehiculo.getCui(),
+                        vehiculo.getMarca(),
+                        vehiculo.getModelo(),
+                        vehiculo.getAnioFabricacion(),
+                        vehiculo.getPaisFabricacion(),
+                        vehiculo.getColor(),
+                        vehiculo.getCilindrada()));
+
+            }
+            return listaAString.toString();
+        } else {
+            return "No se encontro vehiculos con esas coincidencias";
+        }
+    }
+
+    public String listadoDeVehiculo(String nuevoUsado) {
+        ArrayList<Stock> listaVehiculos = new ArrayList<Stock>();
+        StringBuilder listaAString = new StringBuilder();
+        if (nuevoUsado.equals("n")) {
+            for (Stock stock : listaStock) {
+
+                for (Vehiculo vehiculo : stock.getStock()) {
+                    if (vehiculo instanceof Moto || vehiculo instanceof Cuatriciclo) {
+                        listaVehiculos.add(stock);
+                        break;
+                    }
+                }
+            }
+        } else if (nuevoUsado.equals("u")) {
+            for (Stock stock : listaStock) {
+                for (Vehiculo vehiculo : stock.getStock()) {
+                    if (vehiculo instanceof MotoUsada || vehiculo instanceof CuatricicloUsado) {
+                        listaVehiculos.add(stock);
+                        break;
+                    }
+                }
+            }
+        } /*else {
+            System.out.println("Ingreso una opción invalida, vuelva a intentar");
+        }*/
+
+        if (!listaVehiculos.isEmpty()) {
+            listaAString.append(String.format("|%-15s|%-10s|%-15s|%-15s|%-10s|%-10s|%-15s|%n", "CUI", "Marca", "Modelo", "Cilindrada", "Color", "Año Fab", "Id Vehiculo"));
+            listaAString.append("|------------------------------------------------------------------------------------------------|\n");
+            Iterator<Stock> recorredor = listaVehiculos.iterator();
+            while (recorredor.hasNext()) {
+                Stock stock = recorredor.next();
+                for (Vehiculo unVehiculo : stock.getStock()) {
+                    listaAString.append(String.format(
+                                    "|%-15s|%-10s|%-15s|%-15d|%-10s|%-10d|%-15d|\n",
+                                    unVehiculo.getCui(),
+                                    unVehiculo.getMarca(),
+                                    unVehiculo.getModelo(),
+                                    unVehiculo.getCilindrada(),
+                                    unVehiculo.getColor(),
+                                    unVehiculo.getAnioFabricacion(),
+                                    unVehiculo.getIdVehiculo()
+                            )
+                    );
+
+                }
+            }
+            return listaAString.toString();
+
+        }
+        return "Ingreso una opción invalida, vuelva a intentar";
+    }
+
+    public String eliminarUnidadNueva(String cuiAEliminar, int cantidadAEliminar) {
+        Iterator<Stock> recorredor = listaStock.iterator();
+        boolean hayUnidad = false;
+        while (recorredor.hasNext()) {
+            Stock stock = recorredor.next();
+
+            int cantVehiculo = stock.getStock().size();
+            if (cuiAEliminar.equals(stock.getCui())) {
+                if (cantVehiculo > cantidadAEliminar) {
+                    for (int i = 0; i < cantidadAEliminar; i++) {
+                        stock.eliminarVehiculo();
+                        /*stock.getStock().remove(stock.getStock().size() - 1);*/
+                    }
+                } else if (cantVehiculo == cantidadAEliminar) {
+                    stock.eliminarTodoVehiculo();
+                    recorredor.remove();
+                } else {
+                    return "La cantidad de elemenos a eliminar supera el Stock, intente de nuevo";
+                }
+                hayUnidad = true;
+                break;
+            }
+
+        }
+        if (!hayUnidad) {
+            return "La unidad que esta buscando no existe o es erronea, intente de nuevo";
+        } else {
+            return "Se elimino/eliminaron la/s unidade/s solicitada/s satifactoriamente";
+        }
+    }
+    public String eliminarUnidadUsada(String cuiAEliminar){
+        boolean hayUnidad = false;
+        Iterator<Stock> recorredor = listaStock.iterator();
+        while (recorredor.hasNext()) {
+            Stock stock = recorredor.next();
+            for (Vehiculo vehiculo : stock.getStock()) {
+                if (vehiculo.getCui().equals(cuiAEliminar)) {
+                    stock.eliminarTodoVehiculo();
+                    recorredor.remove();
+                    hayUnidad = true;
+                    break;
+                }
+            }
+        }
+        if (!hayUnidad) {
+            return "La unidad que esta buscando no existe o es erronea, intente de nuevo";
+        }
+        return "Se elimino la unidad solicitada satifactoriamente";
+    }
+
+    public String modificarVehiculo(String cuiAModificar, String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion,String paisFabricacion){
+        Iterator<Stock> recorredor = listaStock.iterator();
+        boolean hayVehiculo=false;
+        while (recorredor.hasNext()) {
+            Stock stock = recorredor.next();
+            Iterator<Vehiculo> recorreVehiculo = stock.getStock().iterator();
+            if (stock.getCui().equals(cuiAModificar)) {
+                while (recorreVehiculo.hasNext()) {
+                    Vehiculo vehiculo = recorreVehiculo.next();
+                    vehiculo.modificaUnVehiculo(tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion);
+                }
+                hayVehiculo=true;
+                break;
+            }
+
+        }
+        if(hayVehiculo) return "La modificacion se llevo con exito";
+        else return "No se encontro vehiculo, intente de nuevo";
+    }
 }

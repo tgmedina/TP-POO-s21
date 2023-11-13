@@ -47,4 +47,12 @@ public class Stock {
     public void setCui(String cui) {
         this.cui = cui;
     }
+
+    public void eliminarVehiculo(){
+        stock.remove(stock.size()-1);
+    }
+    public void eliminarTodoVehiculo(){
+        stock.clear();
+    }
+
 }
