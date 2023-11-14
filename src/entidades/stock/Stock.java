@@ -55,5 +55,4 @@ public class Stock {
         stock.clear();
     }
 
-    public void
 }

@@ -232,7 +232,7 @@ public class Consecionaria {
 
         StringBuilder listaAString = new StringBuilder();
         listaAString.append("---------------Datos de la unidad---------------");
-        listaAString.append("------------------------------------------------");
+        listaAString.append("\n------------------------------------------------");
         while(recorredor.hasNext()){
             Stock stock = recorredor.next();
             if(stock.getCui().equals(cuiADetallar)){

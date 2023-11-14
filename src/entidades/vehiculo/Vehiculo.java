@@ -166,21 +166,20 @@ public abstract class Vehiculo {
     }
 
     public String detalleUnVehiculo() {
-        return String.format(
-                "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%-2d-%30s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n" +
-                        "|%.15s|%32s|%n",
+        return String.format("%n"+
+                "|%-15s|%-32s|%n" +
+                        "|%-15s|%-32d|%n" +
+                        "|%-15s|%-32s|%n" +
+                        "|%-15s|%-32s|%n" +//modelo
+                        "|%-15s|%-32s|%n" +//pais
+                        "|%-15s|%-32d|%n" +//anio
+                        "|%-15s|%-32s|%n" +//color
+                        "|%-15s|%-32d|%n" +//cc
+                        "|%-15s|%-2d-%30s|%n" +//tipoMotor
+                        "|%-15s|%-32s|%n" +//tipoRef
+                        "|%-15s|%-32d|%n" +//Tanque
+                        "|%-15s|%-32s|%n" +
+                        "|%-15s|%-32s|%n",
                 "CUI", this.cui,
                 "ID Vehiculo", this.idVehiculo,
                 "Marca", this.marca,
@@ -189,7 +188,7 @@ public abstract class Vehiculo {
                 "Año. Fab.", this.anioFabricacion,
                 "Color", this.color,
                 "Cilindrada", this.cilindrada,
-                "Tipo Motor", this.tipoMotor,
+                "Tipo Motor", this.tipoMotor, "Tiempos",
                 "Tipo Ref.", this.tipoRefrigeracion,
                 "Cap. Tanque", this.tanque,
                 "Freno Del.", this.frenoDelantero,
