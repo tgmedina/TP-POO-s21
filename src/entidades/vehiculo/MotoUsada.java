@@ -73,6 +73,22 @@ public class MotoUsada extends Moto implements VehiculoUsado {
     }
 
     @Override
+    public String detalleUnVehiculo() {
+        String detalleVehiculo = super.detalleUnVehiculo();
+        String detalleMotoUsada = String.format(
+                "|%-15s|%-32s|%n"+
+                        "|%-15s|%-32s|%n" +
+                        "|%-15s|%-32d|%n" +
+                        "|%-15s|%-32d|%n",
+                "Espejo Der.", this.espejoDerecho,
+                "Espejo Izq.", this.espejoIzquierdo,
+                "Estado Bat.", this.estadoBateria,
+                "Estado pint.", this.estadoPintura
+        );
+        return detalleVehiculo+detalleMotoUsada+"Otros Detalles--------------------------\n"+this.otrosDetalles;
+    }
+
+    @Override
     public void tieneDeuda() {
 
     }

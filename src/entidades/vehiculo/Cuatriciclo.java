@@ -30,7 +30,23 @@ public class Cuatriciclo extends Vehiculo {
     @Override
     public void modificaUnVehiculo(String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion, String paisFabricacion) {
         super.modificaUnVehiculo(tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion);
-        if(!tipoTraccion.isEmpty()) this.tipoTraccion=tipoTraccion;
-        this.esATV=esATV;
+        if (!tipoTraccion.isEmpty()) this.tipoTraccion = tipoTraccion;
+        this.esATV = esATV;
+    }
+
+    @Override
+    public String detalleUnVehiculo() {
+
+        String detalleCuatriciclo = "";
+        if (this.esATV) {
+            detalleCuatriciclo = String.format("|%-15s|%-32s|%n", "ATV", "Si");
+        } else {
+            detalleCuatriciclo = String.format("|%-15s|%-32s|%n", "ATV", "No");
+        }
+
+        detalleCuatriciclo = detalleCuatriciclo + String.format(
+                "|%-15s|%-32s|%n", "Tipo Traccion", this.tipoTraccion
+        );
+        return super.detalleUnVehiculo() + detalleCuatriciclo;
     }
 }

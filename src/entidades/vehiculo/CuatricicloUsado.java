@@ -74,6 +74,21 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
     }
 
     @Override
+    public String detalleUnVehiculo() {
+        String detalleCuatricicloUsado = String.format(
+                "|%-15s|%-32s|%n"+
+                        "|%-15s|%-32s|%n" +
+                        "|%-15s|%-32d|%n" +
+                        "|%-15s|%-32d|%n",
+                "Espejo Der.", this.espejoDerecho,
+                "Espejo Izq.", this.espejoIzquierdo,
+                "Estado Bat.", this.estadoBateria,
+                "Estado pint.", this.estadoPintura
+        );
+        return super.detalleUnVehiculo()+ detalleCuatricicloUsado+ "Otros Detalles--------------------------\n" + this.otrosDetalles;
+    }
+
+    @Override
     public void tieneDeuda() {
 
     }

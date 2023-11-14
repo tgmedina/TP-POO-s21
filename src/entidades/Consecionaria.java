@@ -227,4 +227,21 @@ public class Consecionaria {
         if(hayVehiculo) return "La modificacion se llevo con exito";
         else return "No se encontro vehiculo, intente de nuevo";
     }
+    public String detallesVehiculos(String cuiADetallar){
+        Iterator<Stock> recorredor = listaStock.iterator();
+
+        StringBuilder listaAString = new StringBuilder();
+        listaAString.append("---------------Datos de la unidad---------------");
+        listaAString.append("------------------------------------------------");
+        while(recorredor.hasNext()){
+            Stock stock = recorredor.next();
+            if(stock.getCui().equals(cuiADetallar)){
+                Vehiculo unVehiculo = stock.getStock().getFirst();
+                listaAString.append(unVehiculo.detalleUnVehiculo());
+                return  listaAString.toString();
+            }
+
+        }
+        return "Se ingreso un CUI inexistente";
+    }
 }

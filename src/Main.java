@@ -381,10 +381,11 @@ public class Main {
         System.out.println(consecionaria.modificarVehiculo(cuiAModificar, tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion));
         }
     private static void detallesVehiculos() {
-        Iterator<Stock> recorredor = listaStock.iterator();
+//        Iterator<Stock> recorredor = listaStock.iterator();
         System.out.println("Ingrese el CUI del vehiculo que desea ver los detalles");
         String cuiADetallar = sc.nextLine();
-        boolean hayVehiculo = false;
+        System.out.println(consecionaria.detallesVehiculos(cuiADetallar));
+        /*
         if (!cuiADetallar.isEmpty()) {
             while (recorredor.hasNext()) {
                 Stock stock = recorredor.next();
@@ -444,7 +445,7 @@ public class Main {
         }
         if (!hayVehiculo) {
             System.out.println("No se encontro el CUI, intente de nuevo.");
-        }
+        }*/
     }
 }
 

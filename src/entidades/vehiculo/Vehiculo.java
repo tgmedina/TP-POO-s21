@@ -165,5 +165,56 @@ public abstract class Vehiculo {
         if (!tipoRueda.isEmpty()) this.tipoRueda = tipoRueda;
     }
 
+    public String detalleUnVehiculo() {
+        return String.format(
+                "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%-2d-%30s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n" +
+                        "|%.15s|%32s|%n",
+                "CUI", this.cui,
+                "ID Vehiculo", this.idVehiculo,
+                "Marca", this.marca,
+                "Modelo", this.modelo,
+                "Nacionalidad", this.paisFabricacion,
+                "Año. Fab.", this.anioFabricacion,
+                "Color", this.color,
+                "Cilindrada", this.cilindrada,
+                "Tipo Motor", this.tipoMotor,
+                "Tipo Ref.", this.tipoRefrigeracion,
+                "Cap. Tanque", this.tanque,
+                "Freno Del.", this.frenoDelantero,
+                "Freno Tras.", this.frenoTrasero
+                );
+    }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" +
+                "cui='" + cui + '\'' +
+                ", idVehiculo=" + idVehiculo +
+                ", marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", paisFabricacion='" + paisFabricacion + '\'' +
+                ", color='" + color + '\'' +
+                ", cilindrada=" + cilindrada +
+                ", anioFabricacion=" + anioFabricacion +
+                ", tipoMotor=" + tipoMotor +
+                ", tipoRefrigeracion='" + tipoRefrigeracion + '\'' +
+                ", tanque=" + tanque +
+                ", frenoDelantero='" + frenoDelantero + '\'' +
+                ", frenoTrasero='" + frenoTrasero + '\'' +
+                ", tipoRueda='" + tipoRueda + '\'' +
+                '}';
+    }
 }
 
