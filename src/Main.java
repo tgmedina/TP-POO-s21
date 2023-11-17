@@ -1,4 +1,6 @@
 import entidades.Consecionaria;
+
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -46,6 +48,23 @@ public class Main {
                 case 6:
                     detallesVehiculos();
                     break;
+                case 7:
+                    System.out.println(
+                            "Ingrese:\n" +
+                                    "Opcion 1: Ver estado de los vehiculos usados\n" +
+                                    "Opcion 2: Ingresar trabajo de Service para un vehiculo\n");
+                    while (!sc.hasNextInt()) {
+                        System.out.println("Debe ingresar un numero, intente de nuevo por favor: ");
+                        sc.next();
+                    }
+                    switch (f){
+                        case 1:
+                            estadoVehiculo();
+                            break;
+                        case 2:
+                            serviceVehiculo();
+                            break;
+                    }
 
                 case 0:
                     System.out.println("Saliendo del sistema\nMuchas gracias por elegirnos");
@@ -64,7 +83,7 @@ public class Main {
     }
 
     public static void altaVehiculo() {
-
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/mm/yyyy");
         System.out.println("\nIndique si la/s unidad/es es/son 0KM(n) o usada/s(u):");
         String nuevoUsado = sc.nextLine().toLowerCase();
         while (!nuevoUsado.equals("n") && !nuevoUsado.equals("u")) {
@@ -159,12 +178,14 @@ public class Main {
             System.out.println("Ingrese, del 1 al 100, el estado de la pintura: ");
             int estadoPintura = sc.nextInt();
             sc.nextLine();
+            System.out.println("Ingrese el Kilometraje:");
+            long kilometraje = sc.nextLong();
             System.out.println("Describa otros detalles: ");
             String otrosDetalles = sc.nextLine();
             if (cuatriMoto.equals("m")) {
-                consecionaria.altaMotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
+                consecionaria.altaMotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
             } else {
-                consecionaria.altaCuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
+                consecionaria.altaCuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
             }
         }
     }
@@ -338,6 +359,15 @@ public class Main {
         System.out.println("Ingrese el CUI del vehiculo que desea ver los detalles");
         String cuiADetallar = sc.nextLine();
         System.out.println(consecionaria.detallesVehiculos(cuiADetallar));
+    }
+    private static void estadoVehiculo(){
+        System.out.println(consecionaria.listadoDeVehiculo("u"));
+        System.out.println("Ingrese el Nro. de CUI que desea verificar:");
+        String cui = sc.nextLine();
+        consecionaria.estadoVehiculo(cui);
+    }
+    private static void serviceVehiculo(){
+
     }
 }
 

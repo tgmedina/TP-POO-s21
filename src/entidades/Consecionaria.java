@@ -2,6 +2,7 @@ package entidades;
 
 import entidades.stock.Stock;
 import entidades.vehiculo.*;
+import interfaces.permisos.VehiculoUsado;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -57,17 +58,15 @@ public class Consecionaria {
         }
     }
 
-    public void altaMotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
-        MotoUsada moto = new MotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-//        moto.setCui(moto.getCui() + (String.valueOf(moto.getIdVehiculo()).substring(String.valueOf(moto.getCui()).length() - 2)));
+    public void altaMotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles, long kilometraje) {
+        MotoUsada moto = new MotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
         Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + moto.getIdVehiculo(), moto.getCui());
         stock.getStock().add(moto);
         listaStock.add(stock);
     }
 
-    public void altaCuatricicloUsado(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoTraccion, Boolean esATV, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
-        CuatricicloUsado cuatriciclo = new CuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles);
-//        cuatriciclo.setCui(cuatriciclo.getCui() + (String.valueOf(cuatriciclo.getIdVehiculo()).substring(String.valueOf(cuatriciclo.getIdVehiculo()).length() - 2)));
+    public void altaCuatricicloUsado(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoTraccion, Boolean esATV, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles, long kilometraje) {
+        CuatricicloUsado cuatriciclo = new CuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
         Stock stock = new Stock(marca + " " + modelo + " " + anioFabricacion + " " + color + cuatriciclo.getIdVehiculo(), cuatriciclo.getCui());
         stock.getStock().add(cuatriciclo);
         listaStock.add(stock);
@@ -188,7 +187,8 @@ public class Consecionaria {
             return "Se elimino/eliminaron la/s unidade/s solicitada/s satifactoriamente";
         }
     }
-    public String eliminarUnidadUsada(String cuiAEliminar){
+
+    public String eliminarUnidadUsada(String cuiAEliminar) {
         boolean hayUnidad = false;
         Iterator<Stock> recorredor = listaStock.iterator();
         while (recorredor.hasNext()) {
@@ -208,9 +208,9 @@ public class Consecionaria {
         return "Se elimino la unidad solicitada satifactoriamente";
     }
 
-    public String modificarVehiculo(String cuiAModificar, String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion,String paisFabricacion){
+    public String modificarVehiculo(String cuiAModificar, String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion, String paisFabricacion) {
         Iterator<Stock> recorredor = listaStock.iterator();
-        boolean hayVehiculo=false;
+        boolean hayVehiculo = false;
         while (recorredor.hasNext()) {
             Stock stock = recorredor.next();
             Iterator<Vehiculo> recorreVehiculo = stock.getStock().iterator();
@@ -219,29 +219,45 @@ public class Consecionaria {
                     Vehiculo vehiculo = recorreVehiculo.next();
                     vehiculo.modificaUnVehiculo(tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion);
                 }
-                hayVehiculo=true;
+                hayVehiculo = true;
                 break;
             }
 
         }
-        if(hayVehiculo) return "La modificacion se llevo con exito";
+        if (hayVehiculo) return "La modificacion se llevo con exito";
         else return "No se encontro vehiculo, intente de nuevo";
     }
-    public String detallesVehiculos(String cuiADetallar){
+
+    public String detallesVehiculos(String cuiADetallar) {
         Iterator<Stock> recorredor = listaStock.iterator();
 
         StringBuilder listaAString = new StringBuilder();
         listaAString.append("---------------Datos de la unidad---------------");
         listaAString.append("\n------------------------------------------------");
-        while(recorredor.hasNext()){
+        while (recorredor.hasNext()) {
             Stock stock = recorredor.next();
-            if(stock.getCui().equals(cuiADetallar)){
+            if (stock.getCui().equals(cuiADetallar)) {
                 Vehiculo unVehiculo = stock.getStock().getFirst();
                 listaAString.append(unVehiculo.detalleUnVehiculo());
-                return  listaAString.toString();
+                return listaAString.toString();
             }
 
         }
         return "Se ingreso un CUI inexistente";
+    }
+
+    public String estadoVehiculo(String cuiAVerificar) {
+        Iterator<Stock> iterador = listaStock.iterator();
+        while (iterador.hasNext()) {
+            Stock stock = iterador.next();
+            if (stock.getCui().equals(cuiAVerificar)) {
+                Vehiculo unVehiculo = stock.getStock().getFirst();
+                if (unVehiculo instanceof MotoUsada || unVehiculo instanceof CuatricicloUsado) {
+                    return ((VehiculoUsado) unVehiculo).estadoVehiculo();
+                }
+            }
+        }
+
+        return "";
     }
 }

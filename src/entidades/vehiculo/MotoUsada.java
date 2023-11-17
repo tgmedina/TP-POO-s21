@@ -3,6 +3,9 @@ package entidades.vehiculo;
 import entidades.vehiculo.Moto;
 import interfaces.permisos.VehiculoUsado;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class MotoUsada extends Moto implements VehiculoUsado {
     private String espejoDerecho;
     private String espejoIzquierdo;
@@ -11,8 +14,11 @@ public class MotoUsada extends Moto implements VehiculoUsado {
     private String otrosDetalles;
     private boolean tieneDeuda = false;
     private boolean impedimentoJudicial = false;
+    private LocalDate ultimoService = null;
+    private long ultimoServiceKM = 0;
+    private long kilometraje;
 
-    public MotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles) {
+    public MotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles, long kilometraje) {
         super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
         this.setCui(this.getCui() + (String.valueOf(this.getIdVehiculo()).substring(String.valueOf(this.getCui()).length() - 2)));
         this.espejoDerecho = espejoDerecho;
@@ -20,9 +26,10 @@ public class MotoUsada extends Moto implements VehiculoUsado {
         this.estadoBateria = estadoBateria;
         this.estadoPintura = estadoPintura;
         this.otrosDetalles = otrosDetalles;
+        this.kilometraje = kilometraje;
     }
 
-    public String getEspejoDerecho() {
+/*    public String getEspejoDerecho() {
         return espejoDerecho;
     }
 
@@ -60,32 +67,34 @@ public class MotoUsada extends Moto implements VehiculoUsado {
 
     public void setOtrosDetalles(String otrosDetalles) {
         this.otrosDetalles = otrosDetalles;
-    }
+    }*/
 
     @Override
     public void modificaUnVehiculo(String tipoRefrigeracion, int cilindrada, int tipoMotor, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, boolean esATV, int estadoBateria, int estadoPintura, String otroDetalle, String espejoDerecho, String espejoIzquierdo, String tipoTraccion, String paisFabricacion) {
         super.modificaUnVehiculo(tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion);
-        if(!espejoDerecho.isEmpty()) this.espejoDerecho=espejoDerecho;
-        if(!espejoIzquierdo.isEmpty()) this.espejoIzquierdo=espejoIzquierdo;
-        if(estadoBateria>0) this.estadoBateria=estadoBateria;
-        if(estadoPintura>0) this.estadoPintura=estadoPintura;
-        if(!otroDetalle.isEmpty()) this.otrosDetalles=otroDetalle;
+        if (!espejoDerecho.isEmpty()) this.espejoDerecho = espejoDerecho;
+        if (!espejoIzquierdo.isEmpty()) this.espejoIzquierdo = espejoIzquierdo;
+        if (estadoBateria > 0) this.estadoBateria = estadoBateria;
+        if (estadoPintura > 0) this.estadoPintura = estadoPintura;
+        if (!otroDetalle.isEmpty()) this.otrosDetalles = otroDetalle;
     }
 
     @Override
     public String detalleUnVehiculo() {
         String detalleVehiculo = super.detalleUnVehiculo();
         String detalleMotoUsada = String.format(
-                "|%-15s|%-32s|%n"+
+                "|%-15s|%-32s|%n" +
                         "|%-15s|%-32s|%n" +
+                        "|%-15s|%-32d|%n" +
                         "|%-15s|%-32d|%n" +
                         "|%-15s|%-32d|%n",
                 "Espejo Der.", this.espejoDerecho,
                 "Espejo Izq.", this.espejoIzquierdo,
                 "Estado Bat.", this.estadoBateria,
-                "Estado pint.", this.estadoPintura
+                "Estado pint.", this.estadoPintura,
+                "Kilometraje", this.kilometraje
         );
-        return detalleVehiculo+detalleMotoUsada+"Otros Detalles--------------------------\n"+this.otrosDetalles;
+        return detalleVehiculo + detalleMotoUsada + "Otros Detalles--------------------------\n" + this.otrosDetalles;
     }
 
     @Override
@@ -111,6 +120,26 @@ public class MotoUsada extends Moto implements VehiculoUsado {
         } else {
             return "No se especificó o no cuenta con impedimento judicial";
         }
+    }
+
+    @Override
+    public String estadoVehiculo() {
+        StringBuilder sb = new StringBuilder();
+        LocalDate hoy = LocalDate.now();
+        if (ChronoUnit.DAYS.between(hoy, this.ultimoService) >= duracionService) return "El vehiculo " + this.getCui()+ " tiene el Service vencido";
+        if (this.getCilindrada()>=bajaCilindrada){
+            if (this.kilometraje>=revisionMotorAltaCC) {
+                sb.append("\nEl vehiculo " + this.getCui() + " tiene el Service vencido");
+                return sb.toString();
+            }
+        }else{
+            if (this.kilometraje>=revisionMotorBajaCC) {
+                sb.append("\nEl vehiculo " + this.getCui() + " tiene el Service vencido");
+                return sb.toString();
+            }
+        }
+
+        return "El vehiculo " + this.getCui() + " se encuentra en buen estado";
     }
 
 
