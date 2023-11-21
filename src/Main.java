@@ -1,4 +1,4 @@
-import entidades.Consecionaria;
+import entidades.Concesionaria;
 
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static Consecionaria consecionaria = new Consecionaria();
+    private static Concesionaria concesionaria = new Concesionaria();
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -172,9 +172,9 @@ public class Main {
             int cantidadAlta = sc.nextInt();
             sc.nextLine();
             if (cuatriMoto.equals("m")) {
-                consecionaria.altaMoto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, cantidadAlta);
+                concesionaria.altaMoto(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, cantidadAlta);
             } else {
-                consecionaria.altaCuatriciclo(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, cantidadAlta);
+                concesionaria.altaCuatriciclo(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, cantidadAlta);
             }
         } else {
             System.out.println("Describa el estado del espejo derecho: ");
@@ -192,9 +192,9 @@ public class Main {
             System.out.println("Describa otros detalles: ");
             String otrosDetalles = sc.nextLine();
             if (cuatriMoto.equals("m")) {
-                consecionaria.altaMotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
+                concesionaria.altaMotoUsada(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
             } else {
-                consecionaria.altaCuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
+                concesionaria.altaCuatricicloUsado(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV, espejoDerecho, espejoIzquierdo, estadoBateria, estadoPintura, otrosDetalles, kilometraje);
             }
         }
     }
@@ -232,13 +232,13 @@ public class Main {
         if (anioFabricacion != 0) {
             cuiBusqueda = cuiBusqueda + anioFabricacion;
         }
-        System.out.println(consecionaria.busquedaCui(cuiBusqueda));
+        System.out.println(concesionaria.busquedaCui(cuiBusqueda));
     }
 
     public static void listadoDeVehiculos() {
         System.out.println("Ingrese 'n' (0 KM) o 'u' (usados) para desplegar sus correspondientes listas:");
         String nuevoUsado = sc.nextLine();
-        System.out.println(consecionaria.listadoDeVehiculo(nuevoUsado));
+        System.out.println(concesionaria.listadoDeVehiculo(nuevoUsado));
     }
 
     private static void eliminarUnidad() {
@@ -251,11 +251,11 @@ public class Main {
             System.out.println("Ingrese la cantidad que desea eliminar:");
             cantidadAEliminar = sc.nextInt();
             sc.nextLine();
-            System.out.printf(consecionaria.eliminarUnidadNueva(cuiAEliminar, cantidadAEliminar));
+            System.out.printf(concesionaria.eliminarUnidadNueva(cuiAEliminar, cantidadAEliminar));
         } else if (nuevoUsado.equals("u")) {
             System.out.println("Ingrese el Id del vehiculo que desea eliminar");
             String cuiAEliminar = sc.nextLine();
-            System.out.println(consecionaria.eliminarUnidadUsada(cuiAEliminar));
+            System.out.println(concesionaria.eliminarUnidadUsada(cuiAEliminar));
         } else {
             System.out.println("Ingreso una opción invalida, vuelva a intentar");
         }
@@ -361,20 +361,20 @@ public class Main {
             System.out.println("Ingrese otros detalles");
             otroDetalle = sc.nextLine();
         }
-        System.out.println(consecionaria.modificarVehiculo(cuiAModificar, tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion));
+        System.out.println(concesionaria.modificarVehiculo(cuiAModificar, tipoRefrigeracion, cilindrada, tipoMotor, tanque, frenoDelantero, frenoTrasero, tipoRueda, esATV, estadoBateria, estadoPintura, otroDetalle, espejoDerecho, espejoIzquierdo, tipoTraccion, paisFabricacion));
     }
 
     private static void detallesVehiculos() {
         System.out.println("Ingrese el CUI del vehiculo que desea ver los detalles");
         String cuiADetallar = sc.nextLine();
-        System.out.println(consecionaria.detallesVehiculos(cuiADetallar));
+        System.out.println(concesionaria.detallesVehiculos(cuiADetallar));
     }
 
     private static void estadoVehiculo() {
 /*        System.out.println(consecionaria.listadoDeVehiculo("u"));
         System.out.println("Ingrese el Nro. de CUI que desea verificar:");
         String cui = sc.nextLine();*/
-        System.out.println(consecionaria.estadoVehiculo());
+        System.out.println(concesionaria.estadoVehiculo());
     }
 
     private static void serviceVehiculo() {
@@ -420,7 +420,7 @@ public class Main {
         System.out.println("Ingrese los KM con el que egreso el vehiculo:");
         long kilometrajePrueba = sc.nextLong();
         sc.nextLine();
-        if (f != 0) System.out.println(consecionaria.serviceVehiculo(cuiDeService, f, String.valueOf(fechaService), tipoAceite, marcaAceite, ajusteCarroceria, ajusteCadena, cambioTrasmision, otrosDetalles,kilometrajePrueba));
+        if (f != 0) System.out.println(concesionaria.serviceVehiculo(cuiDeService, f, String.valueOf(fechaService), tipoAceite, marcaAceite, ajusteCarroceria, ajusteCadena, cambioTrasmision, otrosDetalles,kilometrajePrueba));
 
     }
 

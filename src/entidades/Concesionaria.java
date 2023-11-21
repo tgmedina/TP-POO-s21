@@ -5,11 +5,10 @@ import entidades.stock.Stock;
 import entidades.vehiculo.*;
 import interfaces.permisos.VehiculoUsado;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Consecionaria {
+public class Concesionaria {
     private ArrayList<Stock> listaStock = new ArrayList<Stock>();
     private ArrayList<Service> listaService = new ArrayList<Service>();
 

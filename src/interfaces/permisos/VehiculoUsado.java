@@ -25,7 +25,6 @@ public interface VehiculoUsado {
     public void impedimientoJudicial();
     public void esDeudor();
     public String pesaImpedimientoJud(String impJud);
-//    public String estadoVehiculo();
 
 
 
