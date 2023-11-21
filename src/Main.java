@@ -21,7 +21,8 @@ public class Main {
             System.out.printf("Opcion 3: Listado de vehiculos usados/nuevos\n");
             System.out.printf("Opcion 4: Eliminar Unidad\n");
             System.out.printf("Opcion 5: Modificar datos de las unidades vacias\n");
-            System.out.printf("Opcion 6: Obtener detalles de una unidad\nOpción:");
+            System.out.printf("Opcion 6: Obtener detalles de una unidad\n");
+            System.out.printf("Opcion 7: Servicio Tecnico\nOpción:");
 
             while (!sc.hasNextInt()) {
                 System.out.println("Debe ingresar un numero, intente de nuevo por favor: ");
@@ -52,20 +53,28 @@ public class Main {
                     System.out.println(
                             "Ingrese:\n" +
                                     "Opcion 1: Ver estado de los vehiculos usados\n" +
-                                    "Opcion 2: Ingresar trabajo de Service para un vehiculo\n");
+                                    "Opcion 2: Ingresar trabajo de Service para un vehiculo\n" +
+                                    "Opcion 0: Volver al menu principal\nOpcion:");
                     while (!sc.hasNextInt()) {
                         System.out.println("Debe ingresar un numero, intente de nuevo por favor: ");
                         sc.next();
                     }
-                    switch (f){
+                    f = sc.nextInt();
+                    sc.nextLine();
+                    switch (f) {
                         case 1:
                             estadoVehiculo();
                             break;
                         case 2:
                             serviceVehiculo();
                             break;
+                        case 3:
+                            verListaService();
+                        case 0:
+                            f = 1;
+                            break;
                     }
-
+                    break;
                 case 0:
                     System.out.println("Saliendo del sistema\nMuchas gracias por elegirnos");
                     try {
@@ -360,13 +369,63 @@ public class Main {
         String cuiADetallar = sc.nextLine();
         System.out.println(consecionaria.detallesVehiculos(cuiADetallar));
     }
-    private static void estadoVehiculo(){
-        System.out.println(consecionaria.listadoDeVehiculo("u"));
+
+    private static void estadoVehiculo() {
+/*        System.out.println(consecionaria.listadoDeVehiculo("u"));
         System.out.println("Ingrese el Nro. de CUI que desea verificar:");
-        String cui = sc.nextLine();
-        consecionaria.estadoVehiculo(cui);
+        String cui = sc.nextLine();*/
+        System.out.println(consecionaria.estadoVehiculo());
     }
-    private static void serviceVehiculo(){
+
+    private static void serviceVehiculo() {
+        long fechaIngresada = 0;
+        boolean fechaCorrecta = false;
+        boolean ajusteCarroceria=false;
+        boolean ajusteCadena=false;
+        boolean cambioTrasmision=false;
+        String control;
+        System.out.println("Ingrese el cui del vehiculo a realizar mantenimiento:");
+        String cuiDeService = sc.nextLine();
+        do {
+            System.out.println("Ingrese fecha de Service sin guion ni espacios (Dia, mes y año: ddmmaaaa): ");
+            String entrada = sc.nextLine();
+            try {
+                fechaIngresada = Long.parseLong(entrada);
+                fechaCorrecta = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Ingreso una fecha incorrecta, intente de nuevo");
+            }
+        } while (!fechaCorrecta);
+        StringBuilder fechaService = new StringBuilder(String.valueOf(fechaIngresada));
+        fechaService.insert(2, '-');
+        fechaService.insert(5, '-');
+        System.out.println("Ingrese:\n'1' para Service\n'2' para revision del motor y service\n'0' para volver al menu principal");
+        int f = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Ingrese tipo de aceite:");
+        String tipoAceite=sc.nextLine();
+        System.out.println("Ingrese marca de Aceite:");
+        String marcaAceite=sc.nextLine();
+        System.out.println("Ingrese si se realizo ajuste en la carroceria(s/n):");
+        control = sc.nextLine();
+        if(control.equals("s")) ajusteCarroceria=true;
+        System.out.println("Ingrese si se realizo ajuste en la cadena(s/n):");
+        control=sc.nextLine();
+        if(control.equals("s")) ajusteCadena=true;
+        System.out.println("Ingrese si se realizo un cambio de trasmision(s/n):");
+        control=sc.nextLine();
+        if(control.equals("s")) cambioTrasmision=true;
+        System.out.println("Ingrese otros detalles:");
+        String otrosDetalles=sc.nextLine();
+        System.out.println("Ingrese los KM con el que egreso el vehiculo:");
+        long kilometrajePrueba = sc.nextLong();
+        sc.nextLine();
+        if (f != 0) System.out.println(consecionaria.serviceVehiculo(cuiDeService, f, String.valueOf(fechaService), tipoAceite, marcaAceite, ajusteCarroceria, ajusteCadena, cambioTrasmision, otrosDetalles,kilometrajePrueba));
+
+    }
+
+    private static void verListaService() {
+
 
     }
 }

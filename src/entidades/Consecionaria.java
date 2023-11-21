@@ -1,14 +1,17 @@
 package entidades;
 
+import entidades.service.Service;
 import entidades.stock.Stock;
 import entidades.vehiculo.*;
 import interfaces.permisos.VehiculoUsado;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Consecionaria {
     private ArrayList<Stock> listaStock = new ArrayList<Stock>();
+    private ArrayList<Service> listaService = new ArrayList<Service>();
 
     public void altaMoto(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, int cantidadAlta) {
         boolean existeStock = false;
@@ -246,18 +249,69 @@ public class Consecionaria {
         return "Se ingreso un CUI inexistente";
     }
 
-    public String estadoVehiculo(String cuiAVerificar) {
+    public String estadoVehiculo() {
         Iterator<Stock> iterador = listaStock.iterator();
+        ArrayList<Vehiculo> listaVehiculos = new ArrayList<Vehiculo>();
+        StringBuilder listaAString = new StringBuilder();
+
         while (iterador.hasNext()) {
             Stock stock = iterador.next();
-            if (stock.getCui().equals(cuiAVerificar)) {
-                Vehiculo unVehiculo = stock.getStock().getFirst();
-                if (unVehiculo instanceof MotoUsada || unVehiculo instanceof CuatricicloUsado) {
-                    return ((VehiculoUsado) unVehiculo).estadoVehiculo();
+            if (stock.getStock().getFirst() instanceof MotoUsada || stock.getStock().getFirst() instanceof CuatricicloUsado) {
+                listaVehiculos.add(stock.getStock().getFirst());
+            }
+
+        }
+        if (!listaVehiculos.isEmpty()) {
+            listaAString.append(String.format("|%-15s|%-30s|%n", "CUI", "Estado de Vehiculo"));
+            listaAString.append("|---------------------------------------------|\n");
+            Iterator<Vehiculo> iteradorVehiculo = listaVehiculos.iterator();
+            while (iteradorVehiculo.hasNext()) {
+                Vehiculo unVehiculo = iteradorVehiculo.next();
+                if (unVehiculo instanceof VehiculoUsado) {
+                    VehiculoUsado vehiculoUsado = (VehiculoUsado) unVehiculo;
+                    listaAString.append(String.format(
+                            "|%-15s|%-30s|%n",
+                            unVehiculo.getCui(),
+                            vehiculoUsado.estadoVehiculo()
+                    ));
                 }
             }
+            return listaAString.toString();
         }
-
-        return "";
+        return "no se encontro el vehiculo ingresado";
     }
+    public String serviceVehiculo (String cuiDeService,int f, String fechaService, String tipoAceite, String marcaAceite, boolean ajusteCarroceria, boolean ajusteCadena, boolean cambioTramision, String otrosDetalles, long kilometrajePrueba){
+        Iterator<Stock> recorredor = listaStock.iterator();
+        boolean hayVehiculo = false;
+        VehiculoUsado vehiculo = null;
+
+
+        while (recorredor.hasNext()){
+            Stock stock = recorredor.next();
+            if(stock.getCui().equals(cuiDeService)){
+                vehiculo = (VehiculoUsado) stock.getStock().getFirst();
+                hayVehiculo=true;
+            }
+        }
+        if(f==2) {
+            vehiculo.checkMotor();
+        }
+        vehiculo.ServiceVehiculo(fechaService, kilometrajePrueba);
+        if(hayVehiculo) {
+            Service unService = new Service(vehiculo.getUltimoService(),
+                    vehiculo.getCui(),
+                    tipoAceite,
+                    marcaAceite,
+                    ajusteCarroceria,
+                    ajusteCadena,
+                    cambioTramision,
+                    otrosDetalles,
+                    vehiculo.getKilometraje(),
+                    vehiculo.getKilometraje() + kilometrajePrueba);
+            listaService.add(unService);
+            return "El service se creo con exito";
+        }
+        return "No se encontro vehiculo, intente de nuevo";
+    }
+
 }

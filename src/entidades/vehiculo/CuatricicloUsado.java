@@ -3,6 +3,7 @@ package entidades.vehiculo;
 import interfaces.permisos.VehiculoUsado;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
@@ -17,11 +18,18 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
     private long ultimoServiceKM = 0;
 
     private long kilometraje;
+    private long ultimoCheckMotor = 0;
+
+
+    @Override
+    public long getUltimoCheckMotor() {
+        return ultimoCheckMotor;
+    }
 
     public CuatricicloUsado(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String tipoTraccion, Boolean esATV, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles, long kilometraje) {
 
         super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda, tipoTraccion, esATV);
-        this.setCui(this.getCui() + (String.valueOf(this.getIdVehiculo()).substring(String.valueOf(this.getIdVehiculo()).length() - 2)));
+        this.setCui(this.getCui() + (String.valueOf(this.getIdVehiculo()).substring(String.valueOf(this.getIdVehiculo()).length() - 3)));
         this.espejoDerecho = espejoDerecho;
         this.espejoIzquierdo = espejoIzquierdo;
         this.estadoBateria = estadoBateria;
@@ -29,6 +37,21 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
         this.otrosDetalles = otrosDetalles;
         this.kilometraje = kilometraje;
 
+    }
+
+    @Override
+    public LocalDate getUltimoService() {
+        return ultimoService;
+    }
+
+    @Override
+    public long getUltimoServiceKM() {
+        return ultimoServiceKM;
+    }
+
+    @Override
+    public long getKilometraje() {
+        return kilometraje;
     }
 
     @Override
@@ -47,7 +70,7 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
                 "|%-15s|%-32s|%n" +
                         "|%-15s|%-32s|%n" +
                         "|%-15s|%-32d|%n" +
-                        "|%-15s|%-32d|%n"+
+                        "|%-15s|%-32d|%n" +
                         "|%-15s|%-32d|%n",
                 "Espejo Der.", this.espejoDerecho,
                 "Espejo Izq.", this.espejoIzquierdo,
@@ -57,6 +80,8 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
         );
         return super.detalleUnVehiculo() + detalleCuatricicloUsado + "Otros Detalles--------------------------\n" + this.otrosDetalles;
     }
+
+
 
     @Override
     public void tieneDeuda() {
@@ -84,23 +109,21 @@ public class CuatricicloUsado extends Cuatriciclo implements VehiculoUsado {
     }
 
     @Override
-    public String estadoVehiculo() {
-        StringBuilder sb = new StringBuilder();
-        LocalDate hoy = LocalDate.now();
-        if (this.getCilindrada()>=bajaCilindrada){
-            if (ChronoUnit.DAYS.between(hoy, this.ultimoService) >= duracionService || (this.kilometraje-ultimoServiceKM)>=serviceKMAltaCC) sb.append("El vehiculo " + this.getCui()+ " tiene el Service vencido");
-            if (this.kilometraje>=revisionMotorAltaCC) {
-                sb.append("\nEl vehiculo " + this.getCui() + " tiene el Service vencido");
-                return sb.toString();
-            }
-        }else{
-            if (ChronoUnit.DAYS.between(hoy, this.ultimoService) >= duracionService || (this.kilometraje-ultimoServiceKM)>=serviceKMBajaCC) sb.append("El vehiculo " + this.getCui()+ " tiene el Service vencido");
-            if (this.kilometraje>=revisionMotorBajaCC) {
-                sb.append("\nEl vehiculo " + this.getCui() + " tiene el Service vencido");
-                return sb.toString();
-            }
-        }
-
-        return "El vehiculo " + this.getCui() + " se encuentra en buen estado";
+    public void ServiceVehiculo(String fechaService, long kilometrajePrueba) {
+        DateTimeFormatter formato= DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.ultimoService = LocalDate.parse(fechaService, formato);
+        this.kilometraje = kilometrajePrueba;
+        this.ultimoServiceKM = this.kilometraje;
     }
+
+    @Override
+    public void checkMotor() {
+        this.ultimoCheckMotor = this.kilometraje;
+    }
+
+    @Override
+    public String getCui() {
+        return super.getCui();
+    }
+
 }

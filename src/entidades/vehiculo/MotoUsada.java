@@ -4,6 +4,7 @@ import entidades.vehiculo.Moto;
 import interfaces.permisos.VehiculoUsado;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class MotoUsada extends Moto implements VehiculoUsado {
@@ -17,6 +18,24 @@ public class MotoUsada extends Moto implements VehiculoUsado {
     private LocalDate ultimoService = null;
     private long ultimoServiceKM = 0;
     private long kilometraje;
+    private long ultimoCheckMotor;
+
+    @Override
+    public long getUltimoCheckMotor() {
+        return ultimoCheckMotor;
+    }
+
+    public LocalDate getUltimoService() {
+        return ultimoService;
+    }
+
+    public long getUltimoServiceKM() {
+        return ultimoServiceKM;
+    }
+
+    public long getKilometraje() {
+        return kilometraje;
+    }
 
     public MotoUsada(String cui, String marca, String modelo, String paisFabricacion, String color, int cilindrada, long anioFabricacion, int tipoMotor, String tipoRefrigeracion, int tanque, String frenoDelantero, String frenoTrasero, String tipoRueda, String espejoDerecho, String espejoIzquierdo, int estadoBateria, int estadoPintura, String otrosDetalles, long kilometraje) {
         super(cui, marca, modelo, paisFabricacion, color, cilindrada, anioFabricacion, tipoMotor, tipoRefrigeracion, tanque, frenoDelantero, frenoTrasero, tipoRueda);
@@ -121,26 +140,21 @@ public class MotoUsada extends Moto implements VehiculoUsado {
             return "No se especificó o no cuenta con impedimento judicial";
         }
     }
-
     @Override
-    public String estadoVehiculo() {
-        StringBuilder sb = new StringBuilder();
-        LocalDate hoy = LocalDate.now();
-        if (ChronoUnit.DAYS.between(hoy, this.ultimoService) >= duracionService) return "El vehiculo " + this.getCui()+ " tiene el Service vencido";
-        if (this.getCilindrada()>=bajaCilindrada){
-            if (this.kilometraje>=revisionMotorAltaCC) {
-                sb.append("\nEl vehiculo " + this.getCui() + " tiene el Service vencido");
-                return sb.toString();
-            }
-        }else{
-            if (this.kilometraje>=revisionMotorBajaCC) {
-                sb.append("\nEl vehiculo " + this.getCui() + " tiene el Service vencido");
-                return sb.toString();
-            }
-        }
-
-        return "El vehiculo " + this.getCui() + " se encuentra en buen estado";
+    public void ServiceVehiculo(String fechaService, long kilometrajePrueba) {
+        DateTimeFormatter formato= DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.ultimoService = LocalDate.parse(fechaService, formato);
+        this.kilometraje = kilometrajePrueba;
+        this.ultimoServiceKM = this.kilometraje;
     }
 
+    @Override
+    public void checkMotor() {
+        this.ultimoCheckMotor=this.kilometraje;
+    }
 
+    @Override
+    public String getCui() {
+        return super.getCui();
+    }
 }
